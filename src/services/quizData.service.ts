@@ -33,7 +33,7 @@ export class QuizDataService {
       }
     }
 
-    // 2. Load from local Quiz-Bot question JSON fallback
+    // 2. Load from local Quiz-Bot question JSON dataset
     const allQuestions = this.getLocalQuestions();
     
     let filtered = allQuestions;
@@ -46,25 +46,37 @@ export class QuizDataService {
 
     // Shuffle and pick requested count
     const shuffled = [...filtered].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, count);
+    return shuffled.slice(0, Math.min(count, shuffled.length));
   }
 
   /**
-   * Reads fallback questions from JSON dataset
+   * Reads fallback questions from JSON dataset with multi-path resolution
    */
   private static getLocalQuestions(): QuizQuestion[] {
     if (this.localQuestionsCache.length > 0) {
       return this.localQuestionsCache;
     }
 
-    const jsonPath = path.join(__dirname, "../data/hp_gk_questions.json");
-    if (fs.existsSync(jsonPath)) {
-      try {
-        const raw = fs.readFileSync(jsonPath, "utf-8");
-        this.localQuestionsCache = JSON.parse(raw);
-        return this.localQuestionsCache;
-      } catch (err) {
-        logger.error("Failed to parse local hp_gk_questions.json", err);
+    const candidatePaths = [
+      path.join(process.cwd(), "src/data/hp_gk_questions.json"),
+      path.join(process.cwd(), "dist/data/hp_gk_questions.json"),
+      path.join(__dirname, "../data/hp_gk_questions.json"),
+      path.join(__dirname, "../../src/data/hp_gk_questions.json"),
+    ];
+
+    for (const jsonPath of candidatePaths) {
+      if (fs.existsSync(jsonPath)) {
+        try {
+          const raw = fs.readFileSync(jsonPath, "utf-8");
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            this.localQuestionsCache = parsed;
+            logger.info(`Successfully loaded ${parsed.length} HP GK questions from ${jsonPath}`);
+            return this.localQuestionsCache;
+          }
+        } catch (err) {
+          logger.error(`Failed to parse local questions from ${jsonPath}`, err);
+        }
       }
     }
 

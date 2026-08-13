@@ -87,7 +87,6 @@ function buildExamsKeyboard(exams: BackendExam[], page = 1, category = "ALL") {
 
 /**
  * 1. Triggered on /pdfreport or /pdf_report command.
- * Instant loading message sent before fetching exams list.
  */
 export async function handlePdfReportMenu(ctx: Context) {
   try {
@@ -235,14 +234,12 @@ export async function handleSearchCommand(ctx: Context) {
 
 /**
  * 3. Triggered when user selects an Exam.
- * Resolves human-readable exam title instead of raw Mongo ID.
  */
 export async function handleExamSelectedAction(ctx: Context & { match?: RegExpExecArray }) {
   try {
     try { await ctx.answerCbQuery(); } catch (e) {}
     const examCode = ctx.match ? ctx.match[1] : "NON_MEDICAL";
 
-    // Resolve human readable title
     const allExams = await BackendDataService.fetchAllExams();
     const foundExam = allExams.find((e) => e._id === examCode || e.stream === examCode);
     const displayTitle = foundExam ? cleanExamName(foundExam.name, foundExam.stream) : examCode;
@@ -327,7 +324,6 @@ export async function handleFormatSelectedAction(ctx: Context & { match?: RegExp
     const format = ctx.match ? ctx.match[1] : "shift";
     const examCode = ctx.match ? ctx.match[2] : "NON_MEDICAL";
 
-    // Resolve human readable title
     const allExams = await BackendDataService.fetchAllExams();
     const foundExam = allExams.find((e) => e._id === examCode || e.stream === examCode);
     const displayTitle = foundExam ? cleanExamName(foundExam.name, foundExam.stream) : examCode;
@@ -339,10 +335,8 @@ export async function handleFormatSelectedAction(ctx: Context & { match?: RegExp
       await ctx.editMessageText(`⏳ <i>Fetching live records from server &amp; compiling ${formatTitle} for <code>${safeTitle}</code>...</i>`, { parse_mode: "HTML" });
     } catch (e) {}
 
-    // Fetch live submission records from Backend API
     const submissions = await BackendDataService.fetchSubmissionsByStream(examCode);
 
-    // Generate chosen PDF format
     let pdfBuffer: Buffer;
     let filename: string;
 
@@ -354,7 +348,6 @@ export async function handleFormatSelectedAction(ctx: Context & { match?: RegExp
       filename = `HP_RankCheck_${displayTitle.replace(/\s+/g, "_")}_Shift_Report.pdf`;
     }
 
-    // Increment user's daily exam PDF count for non-admins
     if (!isAdmin) {
       incrementUserDailyExamPdfCount(userId);
     }
@@ -383,6 +376,7 @@ export async function handleFormatSelectedAction(ctx: Context & { match?: RegExp
 
 /**
  * 5. Triggered on /gk_quiz_pdf command.
+ * Displays interactive 10, 20, or 30 questions selection menu!
  */
 export async function handleGkQuizPdfCommand(ctx: Context) {
   try {
@@ -404,14 +398,65 @@ export async function handleGkQuizPdfCommand(ctx: Context) {
       }
     }
 
-    try { await ctx.sendChatAction("typing"); } catch (e) {}
-    const quizLoadingMsg = await ctx.replyWithHTML("⏳ <i>Loading question bank &amp; compiling HP GK Practice Set PDF...</i>");
+    const text = 
+      `🧠 <b>HP GK Practice Quiz PDF Generator</b>\n\n` +
+      `Choose the number of questions for your practice set PDF:\n` +
+      `• <b>10 Questions</b>: Quick 10-Question Practice Set\n` +
+      `• <b>20 Questions</b>: Standard 20-Question Quiz Set\n` +
+      `• <b>30 Questions</b>: Full 30-Question Practice Mock`;
 
-    // Fetch 20 questions from Quiz-Bot question bank
-    const questions = await QuizDataService.fetchQuizQuestions(20);
+    const keyboard = Markup.inlineKeyboard([
+      [
+        Markup.button.callback("📝 10 Questions Set", "quizcount_10"),
+        Markup.button.callback("📝 20 Questions Set", "quizcount_20"),
+      ],
+      [
+        Markup.button.callback("📝 30 Questions Full Set", "quizcount_30"),
+      ]
+    ]);
+
+    await ctx.replyWithHTML(text, keyboard);
+  } catch (err) {
+    logger.error("Failed to render /gk_quiz_pdf menu", err);
+    await ctx.reply("❌ Failed to load Quiz PDF menu.");
+  }
+}
+
+/**
+ * 6. Triggered when user selects 10, 20, or 30 Questions callback.
+ */
+export async function handleQuizCountSelectedAction(ctx: Context & { match?: RegExpExecArray }) {
+  try {
+    try { await ctx.answerCbQuery(); } catch (e) {}
+    const userId = ctx.from?.id ? String(ctx.from.id) : "";
+    const isAdmin = isAdminUser(userId);
+
+    // Enforce 1 Daily Quiz PDF Limit for non-admin users
+    if (!isAdmin) {
+      const currentDailyCount = getUserDailyQuizPdfCount(userId);
+      if (currentDailyCount >= MAX_DAILY_QUIZ_PDF_LIMIT) {
+        const limitText = 
+          `🚫 <b>Daily Quiz PDF Limit Reached!</b>\n\n` +
+          `You have already generated your <b>${MAX_DAILY_QUIZ_PDF_LIMIT} free Quiz PDF set</b> today.\n\n` +
+          `Your daily quiz quota will automatically reset tomorrow at <b>00:00 IST</b>.`;
+
+        try {
+          await ctx.editMessageText(limitText, { parse_mode: "HTML" });
+        } catch (e) {}
+        return;
+      }
+    }
+
+    const qCount = ctx.match ? parseInt(ctx.match[1], 10) : 20;
+
+    try {
+      await ctx.editMessageText(`⏳ <i>Fetching ${qCount} questions from bank &amp; compiling HP GK Practice Set PDF...</i>`, { parse_mode: "HTML" });
+    } catch (e) {}
+
+    // Fetch exact requested questions count from Quiz Data Service
+    const questions = await QuizDataService.fetchQuizQuestions(qCount);
     const pdfBuffer = await PdfGeneratorService.generateGkQuizPdf(questions);
 
-    // Increment user's daily quiz count for non-admins
     if (!isAdmin) {
       incrementUserDailyQuizPdfCount(userId);
     }
@@ -420,7 +465,7 @@ export async function handleGkQuizPdfCommand(ctx: Context) {
     await ctx.replyWithDocument(
       {
         source: pdfBuffer,
-        filename: "HP_GK_20_Questions_Practice_Set.pdf",
+        filename: `HP_GK_${questions.length}_Questions_Practice_Set.pdf`,
       },
       {
         caption: 
@@ -432,7 +477,7 @@ export async function handleGkQuizPdfCommand(ctx: Context) {
       }
     );
   } catch (err) {
-    logger.error("Failed to execute /gk_quiz_pdf command", err);
+    logger.error("Failed to generate GK Quiz PDF by count", err);
     await ctx.reply("❌ Failed to generate GK Quiz PDF.");
   }
 }

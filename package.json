@@ -4,7 +4,7 @@
   "description": "Telegram PDF Generator & Auto-Poster Bot for HP Rank Checker hosted on Railway",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && (mkdir -p dist/data && cp -r src/data/* dist/data/ 2>/dev/null || true)",
     "start": "node dist/index.js",
     "dev": "nodemon --watch src -e ts --exec ts-node src/index.ts"
   },

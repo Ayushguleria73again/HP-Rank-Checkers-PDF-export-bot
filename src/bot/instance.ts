@@ -9,7 +9,8 @@ import {
   handleSearchCommand,
   handleExamSelectedAction, 
   handleFormatSelectedAction, 
-  handleGkQuizPdfCommand
+  handleGkQuizPdfCommand,
+  handleQuizCountSelectedAction
 } from "./controllers/pdf.controller";
 import { handlePostChannelCommand } from "./controllers/broadcast.controller";
 import { logger } from "../utils/logger";
@@ -36,6 +37,7 @@ export function createBotInstance(): Telegraf {
   bot.action(/^cat_([A-Z_]+)$/, handlePdfReportMenu);
   bot.action(/^exam_(.+)$/, handleExamSelectedAction);
   bot.action(/^format_(shift|raw)_(.+)$/, handleFormatSelectedAction);
+  bot.action(/^quizcount_(\d+)$/, handleQuizCountSelectedAction);
   bot.action("back_to_exams", handlePdfReportMenu);
   bot.action("noop", (ctx) => ctx.answerCbQuery());
 
