@@ -21,12 +21,24 @@ async function main() {
       { command: "post_channel", description: "📢 Broadcast Exam Report PDF to Channel (Admin)" },
     ]);
     logger.info("✅ Telegram Bot Commands Menu registered successfully!");
+  } catch (e) {
+    logger.warn("Could not register bot commands menu on startup:", e);
+  }
 
-    // Launch polling bot
-    await bot.launch();
-    logger.info("🤖 Bot successfully started polling! Connected to Telegram API & Backend REST API.");
-  } catch (err) {
-    logger.error("Failed to launch bot polling instance:", err);
+  // Automatic retry loop for launching bot polling instance (handles Telegram 429 rate limit gracefully)
+  let connected = false;
+  let attempt = 0;
+  while (!connected) {
+    attempt++;
+    try {
+      logger.info(`Connecting bot polling instance (Attempt ${attempt})...`);
+      await bot.launch();
+      connected = true;
+      logger.info("🤖 Bot successfully started polling! Connected to Telegram API & Backend REST API.");
+    } catch (err: any) {
+      logger.error(`Polling launch attempt ${attempt} failed: ${err?.message || err}. Retrying in 12 seconds...`);
+      await new Promise((res) => setTimeout(res, 12000));
+    }
   }
 
   // Enable graceful stop
