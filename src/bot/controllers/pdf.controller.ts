@@ -12,8 +12,8 @@ import {
 import { logger } from "../../utils/logger";
 
 const EXAMS_PER_PAGE = 5;
-const MAX_DAILY_EXAM_PDF_LIMIT = 2; // 2 Exam Report PDFs per day per user
-const MAX_DAILY_QUIZ_PDF_LIMIT = 1; // 1 Quiz Practice Set PDF per day per user
+const MAX_DAILY_EXAM_PDF_LIMIT = 2;
+const MAX_DAILY_QUIZ_PDF_LIMIT = 1;
 
 /**
  * Helper to clean long exam names by stripping redundant prefixes
@@ -87,7 +87,7 @@ function buildExamsKeyboard(exams: BackendExam[], page = 1, category = "ALL") {
 
 /**
  * 1. Triggered on /pdfreport or /pdf_report command.
- * Dynamically fetches ALL active exams from backend database with an instant loading status message.
+ * Instant loading message sent before fetching exams list.
  */
 export async function handlePdfReportMenu(ctx: Context) {
   try {
@@ -108,21 +108,18 @@ export async function handlePdfReportMenu(ctx: Context) {
           page = 1;
         }
       }
-      try {
-        await ctx.answerCbQuery();
-      } catch (e) {}
+      try { await ctx.answerCbQuery(); } catch (e) {}
 
       try {
-        await ctx.editMessageText("⏳ <i>Loading active exams directory...</i>", { parse_mode: "HTML" });
+        await ctx.editMessageText("⏳ <i>Fetching live active exams directory from server...</i>", { parse_mode: "HTML" });
       } catch (e) {}
     } else {
-      try {
-        await ctx.sendChatAction("typing");
-      } catch (e) {}
-      loadingMsg = await ctx.replyWithHTML("⏳ <i>Loading active exams directory...</i>");
+      try { await ctx.sendChatAction("typing"); } catch (e) {}
+      loadingMsg = await ctx.replyWithHTML("⏳ <i>Fetching live active exams directory from server...</i>");
     }
 
-    let exams = await BackendDataService.fetchAllExams();
+    const examsRaw = await BackendDataService.fetchAllExams();
+    let exams = examsRaw;
 
     // Category Filtering
     if (category === "TGT") {
@@ -172,6 +169,7 @@ export async function handlePdfReportMenu(ctx: Context) {
 
 /**
  * 2. Instant Exam Search Command (/search <query>)
+ * Instant loading message sent before searching.
  */
 export async function handleSearchCommand(ctx: Context) {
   try {
@@ -189,7 +187,9 @@ export async function handleSearchCommand(ctx: Context) {
       return;
     }
 
-    await ctx.sendChatAction("typing");
+    try { await ctx.sendChatAction("typing"); } catch (e) {}
+    const searchLoadingMsg = await ctx.replyWithHTML(`⏳ <i>Searching active exams for "${escapeHtml(query)}"...</i>`);
+
     const allExams = await BackendDataService.fetchAllExams();
     const matches = allExams.filter((e) => 
       e.name.toLowerCase().includes(query.toLowerCase()) ||
@@ -197,7 +197,13 @@ export async function handleSearchCommand(ctx: Context) {
     );
 
     if (matches.length === 0) {
-      await ctx.replyWithHTML(`🔍 No exams found matching <code>${escapeHtml(query)}</code>. Type /pdfreport to view all exams.`);
+      await ctx.telegram.editMessageText(
+        searchLoadingMsg.chat.id,
+        searchLoadingMsg.message_id,
+        undefined,
+        `🔍 No exams found matching <code>${escapeHtml(query)}</code>. Type /pdfreport to view all exams.`,
+        { parse_mode: "HTML" }
+      );
       return;
     }
 
@@ -215,7 +221,13 @@ export async function handleSearchCommand(ctx: Context) {
 
     keyboardRows.push([Markup.button.callback("« Back to Exams Directory", "back_to_exams")]);
 
-    await ctx.replyWithHTML(matchText, Markup.inlineKeyboard(keyboardRows));
+    await ctx.telegram.editMessageText(
+      searchLoadingMsg.chat.id,
+      searchLoadingMsg.message_id,
+      undefined,
+      matchText,
+      { parse_mode: "HTML", ...Markup.inlineKeyboard(keyboardRows) }
+    );
   } catch (err) {
     logger.error("Failed to execute /search command", err);
     await ctx.reply("❌ Search failed. Please try again.");
@@ -224,7 +236,6 @@ export async function handleSearchCommand(ctx: Context) {
 
 /**
  * 3. Triggered when user selects an Exam.
- * Displays options for Shift-Wise vs Raw Marks PDF format.
  */
 export async function handleExamSelectedAction(ctx: Context & { match?: RegExpExecArray }) {
   try {
@@ -258,6 +269,7 @@ export async function handleExamSelectedAction(ctx: Context & { match?: RegExpEx
 
 /**
  * 4. Triggered when user selects a Report Format (Shift vs Raw).
+ * Instant loading status message before fetching records and generating PDF.
  */
 export async function handleFormatSelectedAction(ctx: Context & { match?: RegExpExecArray }) {
   try {
@@ -303,7 +315,7 @@ export async function handleFormatSelectedAction(ctx: Context & { match?: RegExp
     const safeCode = escapeHtml(examCode);
 
     const formatTitle = format === "shift" ? "Shift-Wise PDF Report" : "Raw Marks Scoreboard PDF";
-    await ctx.editMessageText(`⏳ Fetching live records &amp; generating <b>${formatTitle}</b> for <code>${safeCode}</code>...\nPlease wait a moment.`, { parse_mode: "HTML" });
+    await ctx.editMessageText(`⏳ <i>Fetching live records from server &amp; compiling ${formatTitle} for <code>${safeCode}</code>...</i>`, { parse_mode: "HTML" });
 
     // Fetch live submission records from Backend API
     const submissions = await BackendDataService.fetchSubmissionsByStream(examCode);
@@ -349,12 +361,14 @@ export async function handleFormatSelectedAction(ctx: Context & { match?: RegExp
 
 /**
  * 5. Triggered on /gk_quiz_pdf command.
+ * Instant loading message sent before fetching quiz question bank.
  */
 export async function handleGkQuizPdfCommand(ctx: Context) {
   try {
     const userId = ctx.from?.id ? String(ctx.from.id) : "";
     const isAdmin = isAdminUser(userId);
 
+    // Enforce 1 Daily Quiz PDF Limit for non-admin users
     if (!isAdmin) {
       const currentDailyCount = getUserDailyQuizPdfCount(userId);
       if (currentDailyCount >= MAX_DAILY_QUIZ_PDF_LIMIT) {
@@ -369,11 +383,14 @@ export async function handleGkQuizPdfCommand(ctx: Context) {
       }
     }
 
-    await ctx.replyWithHTML("⏳ <i>Fetching 20 questions from question bank &amp; generating HP GK Practice Set PDF...</i>");
+    try { await ctx.sendChatAction("typing"); } catch (e) {}
+    const quizLoadingMsg = await ctx.replyWithHTML("⏳ <i>Loading question bank &amp; compiling HP GK Practice Set PDF...</i>");
 
+    // Fetch 20 questions from Quiz-Bot question bank
     const questions = await QuizDataService.fetchQuizQuestions(20);
     const pdfBuffer = await PdfGeneratorService.generateGkQuizPdf(questions);
 
+    // Increment user's daily quiz count for non-admins
     if (!isAdmin) {
       incrementUserDailyQuizPdfCount(userId);
     }
