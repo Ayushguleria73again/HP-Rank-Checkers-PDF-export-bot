@@ -3,14 +3,16 @@ import { CONSTANTS } from "../../config/constants";
 
 export async function handleStartCommand(ctx: Context) {
   const welcomeText = 
-    `🤖 *Welcome to the HP Rank Checker Official Bot!*\n\n` +
-    `I can generate official PDF shift reports, candidate rank summaries, and HP GK practice sets.\n\n` +
-    `*Available Public Commands:*\n` +
-    `• /pdf_report <stream> - Generate a live PDF report\n` +
+    `🤖 <b>Welcome to the HP Rank Checker Official Bot!</b>\n\n` +
+    `I generate official PDF shift reports, candidate scoreboards, and HP GK practice sets.\n\n` +
+    `<b>Available Public Commands:</b>\n` +
+    `• /pdfreport - Browse 48+ exams &amp; download PDF reports\n` +
+    `• /search &lt;query&gt; - Search active exams e.g. <code>/search Biology</code>\n` +
+    `• /stats - View live platform stats &amp; PDF window status\n` +
     `• /gk_quiz_pdf - Download daily HP GK practice quiz PDF\n` +
-    `• /help - View command instructions\n\n` +
-    `*Admin Commands:*\n` +
-    `• /post_channel <stream> - Post PDF report directly to Telegram Channel`;
+    `• /help - View bot help &amp; command guide\n\n` +
+    `<b>Admin Commands:</b>\n` +
+    `• /post_channel &lt;stream&gt; - Broadcast PDF report to Telegram Channel`;
 
   const keyboard = Markup.inlineKeyboard([
     [
@@ -22,5 +24,5 @@ export async function handleStartCommand(ctx: Context) {
     ],
   ]);
 
-  await ctx.replyWithMarkdown(welcomeText, keyboard);
+  await ctx.replyWithHTML(welcomeText, keyboard);
 }

@@ -115,7 +115,7 @@ export class PdfGeneratorService {
             const rowBg = sIdx % 2 === 0 ? "#ffffff" : "#f8fafc";
             doc.fillColor(rowBg).rect(40, currentY, doc.page.width - 80, 20).fill();
 
-            const rollShort = sub._id ? sub._id.slice(-8).toUpperCase() : "N/A";
+            const rollShort = sub.rollNumber || (sub._id ? sub._id.slice(-8).toUpperCase() : "N/A");
             const scoreFormatted = typeof sub.score === "number" ? sub.score.toFixed(2) : String(sub.score || "0.00");
 
             doc
@@ -173,7 +173,7 @@ export class PdfGeneratorService {
         .fillColor("#ffffff")
         .fontSize(20)
         .font("Helvetica-Bold")
-        .text("Raw Candidate Marks Scoreboard", 40, 25);
+        .text("Raw Marks Scoreboard PDF", 40, 25);
 
       doc
         .fontSize(11)
@@ -221,18 +221,18 @@ export class PdfGeneratorService {
           const rowBg = idx % 2 === 0 ? "#ffffff" : "#f5f3ff";
           doc.fillColor(rowBg).rect(40, currentY, doc.page.width - 80, 20).fill();
 
-          const rollShort = sub._id ? sub._id.slice(-8).toUpperCase() : "N/A";
+          const rollShort = sub.rollNumber || (sub._id ? sub._id.slice(-8).toUpperCase() : "N/A");
           const scoreFormatted = typeof sub.score === "number" ? sub.score.toFixed(2) : String(sub.score || "0.00");
 
           doc
             .fillColor("#1e1b4b")
             .fontSize(8.5)
             .font("Helvetica")
-            .text(`#${idx + 1}`, 48, currentY + 5)
+            .text(String(idx + 1), 48, currentY + 5)
             .text(rollShort, 100, currentY + 5)
             .text(sub.category || "General", 250, currentY + 5)
             .text(scoreFormatted, 360, currentY + 5)
-            .text(sub.shift || "Standard", 440, currentY + 5, { width: 110, height: 15 });
+            .text(sub.shift || "N/A", 440, currentY + 5, { width: 120, height: 15 });
 
           currentY += 20;
         });
@@ -314,7 +314,6 @@ export class PdfGeneratorService {
         currentY += doc.heightOfString(`Q${qIdx + 1}. ${q.question}`, { width: doc.page.width - 80 }) + 6;
 
         // Render Options 2 per row
-        const labels = ["A", "B", "C", "D"];
         const optA = q.options[0] ? `[  ] A) ${q.options[0]}` : "";
         const optB = q.options[1] ? `[  ] B) ${q.options[1]}` : "";
         const optC = q.options[2] ? `[  ] C) ${q.options[2]}` : "";

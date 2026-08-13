@@ -4,6 +4,7 @@ import { logger } from "../utils/logger";
 
 export interface BackendSubmission {
   _id: string;
+  rollNumber?: string;
   score: number;
   category: string;
   shift: string;
@@ -90,23 +91,43 @@ export class BackendDataService {
    * Fetch submissions by stream or examId for PDF report generation
    */
   public static async fetchSubmissionsByStream(streamOrExamId: string): Promise<BackendSubmission[]> {
+    const isObjectId = /^[0-9a-fA-F]{24}$/.test(streamOrExamId);
+
+    // 1. If 24-character Mongo ObjectId, check general submissions endpoint first
+    if (isObjectId) {
+      try {
+        const genEndpoint = `${ENV.BACKEND_API_URL}/admin/general/submissions?examId=${streamOrExamId}&export=true`;
+        const genRes = await axios.get(genEndpoint, {
+          headers: { "x-admin-password": ENV.ADMIN_PASSWORD },
+          timeout: 8000,
+        });
+
+        if (genRes.data?.submissions && genRes.data.submissions.length > 0) {
+          return genRes.data.submissions;
+        }
+      } catch (err) {
+        logger.warn(`General submissions lookup failed for examId ${streamOrExamId}`, err);
+      }
+    }
+
+    // 2. Try /admin/analytics/marks endpoint
     try {
-      // Check general submissions endpoint
-      const genEndpoint = `${ENV.BACKEND_API_URL}/admin/general/submissions?examId=${streamOrExamId}&export=true`;
-      const genRes = await axios.get(genEndpoint, {
+      const analyticsEndpoint = `${ENV.BACKEND_API_URL}/admin/analytics/marks?stream=${encodeURIComponent(streamOrExamId)}&sort=desc`;
+      const res = await axios.get(analyticsEndpoint, {
         headers: { "x-admin-password": ENV.ADMIN_PASSWORD },
         timeout: 8000,
       });
 
-      if (genRes.data?.submissions && genRes.data.submissions.length > 0) {
-        return genRes.data.submissions;
+      if (res.data?.data && Array.isArray(res.data.data) && res.data.data.length > 0) {
+        return res.data.data;
       }
     } catch (err) {
-      logger.warn(`General submissions lookup failed for ${streamOrExamId}, trying standard stream endpoint...`, err);
+      logger.warn(`Analytics marks lookup failed for ${streamOrExamId}`, err);
     }
 
+    // 3. Fallback to /admin/submissions endpoint
     try {
-      const endpoint = `${ENV.BACKEND_API_URL}/admin/submissions?stream=${streamOrExamId}&limit=500`;
+      const endpoint = `${ENV.BACKEND_API_URL}/admin/submissions?stream=${encodeURIComponent(streamOrExamId)}&limit=500`;
       const response = await axios.get(endpoint, {
         headers: { "x-admin-password": ENV.ADMIN_PASSWORD },
         timeout: 8000,

@@ -10,7 +10,8 @@ export async function handlePostChannelCommand(ctx: Context) {
     const parts = text.split(" ");
     const stream = parts[1] ? parts[1].toUpperCase() : "NON_MEDICAL";
 
-    await ctx.reply(`⏳ Compiling live shift report and posting to Telegram Channel for *${stream}*...`, { parse_mode: "Markdown" });
+    try { await ctx.sendChatAction("typing"); } catch (e) {}
+    const broadcastLoadingMsg = await ctx.replyWithHTML(`⏳ <i>Fetching live records &amp; compiling PDF report for channel broadcast...</i>`);
 
     // Fetch real backend data
     const submissions = await BackendDataService.fetchSubmissionsByStream(stream);
@@ -20,11 +21,11 @@ export async function handlePostChannelCommand(ctx: Context) {
     const filename = `HP_RankCheck_${stream}_Shift_Report.pdf`;
     
     const caption = 
-      `📊 *HP Rank Checker — Official Shift Report*\n\n` +
-      `🏆 *Exam Stream*: ${stream}\n` +
-      `📅 *Date*: ${new Date().toLocaleDateString()}\n` +
-      `👥 *Evaluated Candidates*: ${submissions.length}\n\n` +
-      `👇 *Download attached PDF report for shift-wise candidate lists & score averages!*`;
+      `📊 <b>HP Rank Checker — Official Shift Report</b>\n\n` +
+      `🏆 <b>Exam Stream</b>: <code>${stream}</code>\n` +
+      `📅 <b>Date</b>: ${new Date().toLocaleDateString()}\n` +
+      `👥 <b>Evaluated Candidates</b>: ${submissions.length}\n\n` +
+      `👇 <i>Download attached PDF report for shift-wise candidate lists &amp; score averages!</i>`;
 
     const success = await TelegramPosterService.sendPdfDocumentToChannel(
       ctx.telegram as any,
@@ -34,9 +35,21 @@ export async function handlePostChannelCommand(ctx: Context) {
     );
 
     if (success) {
-      await ctx.reply(`✅ Successfully posted ${filename} to Telegram Channel!`);
+      await ctx.telegram.editMessageText(
+        broadcastLoadingMsg.chat.id,
+        broadcastLoadingMsg.message_id,
+        undefined,
+        `✅ Successfully posted <b>${filename}</b> to Telegram Channel!`,
+        { parse_mode: "HTML" }
+      );
     } else {
-      await ctx.reply("❌ Failed to post PDF to Telegram Channel. Please check channel credentials.");
+      await ctx.telegram.editMessageText(
+        broadcastLoadingMsg.chat.id,
+        broadcastLoadingMsg.message_id,
+        undefined,
+        "❌ Failed to post PDF to Telegram Channel. Please check channel credentials.",
+        { parse_mode: "HTML" }
+      );
     }
   } catch (err) {
     logger.error("Failed to execute /post_channel command", err);

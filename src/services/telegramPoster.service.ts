@@ -23,7 +23,7 @@ export class TelegramPosterService {
         },
         {
           caption: caption,
-          parse_mode: "Markdown",
+          parse_mode: "HTML",
         }
       );
 
