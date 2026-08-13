@@ -9,9 +9,9 @@ export const ENV = {
     .split(",")
     .map((id) => id.trim())
     .filter(Boolean),
-  BACKEND_API_URL: (process.env.BACKEND_API_URL),
+  BACKEND_API_URL: (process.env.BACKEND_API_URL || "https://exam-rank-check-backend.vercel.app").replace(/\/+$/, ""),
   ADMIN_PASSWORD: process.env.ADMIN_PASSWORD || "",
-  QUIZ_MONGODB_URI: process.env.QUIZ_MONGODB_URI,
+  QUIZ_MONGODB_URI: process.env.QUIZ_MONGODB_URI || "",
   NODE_ENV: process.env.NODE_ENV || "development",
   PORT: parseInt(process.env.PORT || "3000", 10),
 };
