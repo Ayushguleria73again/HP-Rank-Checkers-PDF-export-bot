@@ -3,11 +3,13 @@ import { ENV } from "../config/env.config";
 import { rateLimitMiddleware } from "./middlewares/rateLimit.middleware";
 import { adminAuthMiddleware } from "./middlewares/auth.middleware";
 import { handleStartCommand } from "./controllers/start.controller";
+import { handleStatsCommand } from "./controllers/stats.controller";
 import { 
   handlePdfReportMenu, 
+  handleSearchCommand,
   handleExamSelectedAction, 
   handleFormatSelectedAction, 
-  handleGkQuizPdfCommand 
+  handleGkQuizPdfCommand
 } from "./controllers/pdf.controller";
 import { handlePostChannelCommand } from "./controllers/broadcast.controller";
 import { logger } from "../utils/logger";
@@ -21,6 +23,8 @@ export function createBotInstance(): Telegraf {
   // Commands
   bot.command("start", handleStartCommand);
   bot.command("help", handleStartCommand);
+  bot.command("stats", handleStatsCommand);
+  bot.command("search", handleSearchCommand);
   
   // Dynamic PDF Menu Commands
   bot.command("pdfreport", handlePdfReportMenu);
@@ -28,7 +32,8 @@ export function createBotInstance(): Telegraf {
   bot.command("gk_quiz_pdf", handleGkQuizPdfCommand);
 
   // Interactive Action Callbacks
-  bot.action(/^exampage_(\d+)$/, handlePdfReportMenu);
+  bot.action(/^exampage_([A-Z_]+)_(\d+)$/, handlePdfReportMenu);
+  bot.action(/^cat_([A-Z_]+)$/, handlePdfReportMenu);
   bot.action(/^exam_(.+)$/, handleExamSelectedAction);
   bot.action(/^format_(shift|raw)_(.+)$/, handleFormatSelectedAction);
   bot.action("back_to_exams", handlePdfReportMenu);

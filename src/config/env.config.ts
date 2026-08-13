@@ -11,7 +11,7 @@ export const ENV = {
     .filter(Boolean),
   BACKEND_API_URL: (process.env.BACKEND_API_URL),
   ADMIN_PASSWORD: process.env.ADMIN_PASSWORD || "",
-  QUIZ_MONGODB_URI: process.env.QUIZ_MONGODB_URI || "mongodb+srv://ayushguleria73:YTVEtFzSe1w25Zit@ayush.i6jmd.mongodb.net/gk-quiz-bot?appName=Ayush",
+  QUIZ_MONGODB_URI: process.env.QUIZ_MONGODB_URI,
   NODE_ENV: process.env.NODE_ENV || "development",
   PORT: parseInt(process.env.PORT || "3000", 10),
 };

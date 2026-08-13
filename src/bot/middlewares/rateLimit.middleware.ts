@@ -1,7 +1,9 @@
 import { Context } from "telegraf";
 
 const userLastCommandTime: Map<number, number> = new Map();
-const userDailyPdfMap: Map<string, { count: number; dateStr: string }> = new Map();
+const userDailyExamPdfMap: Map<string, { count: number; dateStr: string }> = new Map();
+const userDailyQuizPdfMap: Map<string, { count: number; dateStr: string }> = new Map();
+
 const RATE_LIMIT_MS = 3000; // 3 seconds cooldown between commands
 
 /**
@@ -23,12 +25,12 @@ function getTodayIstDateStr(): string {
 }
 
 /**
- * Returns user's daily PDF download count for today
+ * Returns user's daily Exam PDF download count for today
  */
-export function getUserDailyPdfCount(userId: string | number): number {
+export function getUserDailyExamPdfCount(userId: string | number): number {
   const uId = String(userId);
   const today = getTodayIstDateStr();
-  const record = userDailyPdfMap.get(uId);
+  const record = userDailyExamPdfMap.get(uId);
 
   if (!record || record.dateStr !== today) {
     return 0;
@@ -37,19 +39,51 @@ export function getUserDailyPdfCount(userId: string | number): number {
 }
 
 /**
- * Increments user's daily PDF count after successful download
+ * Increments user's daily Exam PDF count
  */
-export function incrementUserDailyPdfCount(userId: string | number): number {
+export function incrementUserDailyExamPdfCount(userId: string | number): number {
   const uId = String(userId);
   const today = getTodayIstDateStr();
-  const record = userDailyPdfMap.get(uId);
+  const record = userDailyExamPdfMap.get(uId);
 
   if (!record || record.dateStr !== today) {
-    userDailyPdfMap.set(uId, { count: 1, dateStr: today });
+    userDailyExamPdfMap.set(uId, { count: 1, dateStr: today });
     return 1;
   } else {
     record.count += 1;
-    userDailyPdfMap.set(uId, record);
+    userDailyExamPdfMap.set(uId, record);
+    return record.count;
+  }
+}
+
+/**
+ * Returns user's daily Quiz PDF download count for today
+ */
+export function getUserDailyQuizPdfCount(userId: string | number): number {
+  const uId = String(userId);
+  const today = getTodayIstDateStr();
+  const record = userDailyQuizPdfMap.get(uId);
+
+  if (!record || record.dateStr !== today) {
+    return 0;
+  }
+  return record.count;
+}
+
+/**
+ * Increments user's daily Quiz PDF count
+ */
+export function incrementUserDailyQuizPdfCount(userId: string | number): number {
+  const uId = String(userId);
+  const today = getTodayIstDateStr();
+  const record = userDailyQuizPdfMap.get(uId);
+
+  if (!record || record.dateStr !== today) {
+    userDailyQuizPdfMap.set(uId, { count: 1, dateStr: today });
+    return 1;
+  } else {
+    record.count += 1;
+    userDailyQuizPdfMap.set(uId, record);
     return record.count;
   }
 }

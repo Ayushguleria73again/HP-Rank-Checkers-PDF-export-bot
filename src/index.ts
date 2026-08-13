@@ -12,9 +12,11 @@ async function main() {
   try {
     // Register official Telegram Bot Commands Menu (Autocomplete when typing /)
     await bot.telegram.setMyCommands([
-      { command: "pdfreport", description: "📄 Browse 20+ Exams & Download PDF Reports" },
-      { command: "start", description: "🚀 Start Bot & View Main Menu" },
+      { command: "pdfreport", description: "📄 Browse 48+ Exams & Download PDF Reports" },
+      { command: "search", description: "🔍 Search Exams by Name e.g. /search Biology" },
+      { command: "stats", description: "📊 View Live Platform Analytics & Window Status" },
       { command: "gk_quiz_pdf", description: "🧠 Download Daily HP GK Practice Quiz PDF" },
+      { command: "start", description: "🚀 Start Bot & View Main Menu" },
       { command: "help", description: "❓ View Bot Help & Command Guide" },
       { command: "post_channel", description: "📢 Broadcast Exam Report PDF to Channel (Admin)" },
     ]);
