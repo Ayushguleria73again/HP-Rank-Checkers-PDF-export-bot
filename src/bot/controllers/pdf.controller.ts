@@ -169,7 +169,6 @@ export async function handlePdfReportMenu(ctx: Context) {
 
 /**
  * 2. Instant Exam Search Command (/search <query>)
- * Instant loading message sent before searching.
  */
 export async function handleSearchCommand(ctx: Context) {
   try {
@@ -236,15 +235,22 @@ export async function handleSearchCommand(ctx: Context) {
 
 /**
  * 3. Triggered when user selects an Exam.
+ * Resolves human-readable exam title instead of raw Mongo ID.
  */
 export async function handleExamSelectedAction(ctx: Context & { match?: RegExpExecArray }) {
   try {
     try { await ctx.answerCbQuery(); } catch (e) {}
     const examCode = ctx.match ? ctx.match[1] : "NON_MEDICAL";
-    const safeCode = escapeHtml(examCode);
+
+    // Resolve human readable title
+    const allExams = await BackendDataService.fetchAllExams();
+    const foundExam = allExams.find((e) => e._id === examCode || e.stream === examCode);
+    const displayTitle = foundExam ? cleanExamName(foundExam.name, foundExam.stream) : examCode;
+
+    const safeTitle = escapeHtml(displayTitle);
 
     const text = 
-      `🎯 <b>Selected Target Exam:</b> <code>${safeCode}</code>\n\n` +
+      `🎯 <b>Selected Target Exam:</b> <code>${safeTitle}</code>\n\n` +
       `<b>Choose PDF Report Format:</b>\n` +
       `• <b>Shift-Wise Report</b>: Categorized chronologically by exam date &amp; time slots with shift averages.\n` +
       `• <b>Raw Marks Scoreboard</b>: Full list of candidate marks sorted from highest to lowest score.`;
@@ -261,7 +267,12 @@ export async function handleExamSelectedAction(ctx: Context & { match?: RegExpEx
       ]
     ]);
 
-    await ctx.editMessageText(text, { parse_mode: "HTML", ...keyboard });
+    try {
+      await ctx.editMessageText(text, { parse_mode: "HTML", ...keyboard });
+    } catch (err: any) {
+      if (err?.description?.includes("message is not modified")) return;
+      throw err;
+    }
   } catch (err) {
     logger.error("Failed to process exam selection action", err);
   }
@@ -269,7 +280,6 @@ export async function handleExamSelectedAction(ctx: Context & { match?: RegExpEx
 
 /**
  * 4. Triggered when user selects a Report Format (Shift vs Raw).
- * Instant loading status message before fetching records and generating PDF.
  */
 export async function handleFormatSelectedAction(ctx: Context & { match?: RegExpExecArray }) {
   try {
@@ -288,7 +298,9 @@ export async function handleFormatSelectedAction(ctx: Context & { match?: RegExp
         [Markup.button.callback("« Back to Exams Directory", "back_to_exams")]
       ]);
 
-      await ctx.editMessageText(closedText, { parse_mode: "HTML", ...closedKeyboard });
+      try {
+        await ctx.editMessageText(closedText, { parse_mode: "HTML", ...closedKeyboard });
+      } catch (e) {}
       return;
     }
 
@@ -305,17 +317,27 @@ export async function handleFormatSelectedAction(ctx: Context & { match?: RegExp
           [Markup.button.callback("« Back to Exams Directory", "back_to_exams")]
         ]);
 
-        await ctx.editMessageText(limitText, { parse_mode: "HTML", ...limitKeyboard });
+        try {
+          await ctx.editMessageText(limitText, { parse_mode: "HTML", ...limitKeyboard });
+        } catch (e) {}
         return;
       }
     }
 
     const format = ctx.match ? ctx.match[1] : "shift";
     const examCode = ctx.match ? ctx.match[2] : "NON_MEDICAL";
-    const safeCode = escapeHtml(examCode);
 
+    // Resolve human readable title
+    const allExams = await BackendDataService.fetchAllExams();
+    const foundExam = allExams.find((e) => e._id === examCode || e.stream === examCode);
+    const displayTitle = foundExam ? cleanExamName(foundExam.name, foundExam.stream) : examCode;
+
+    const safeTitle = escapeHtml(displayTitle);
     const formatTitle = format === "shift" ? "Shift-Wise PDF Report" : "Raw Marks Scoreboard PDF";
-    await ctx.editMessageText(`⏳ <i>Fetching live records from server &amp; compiling ${formatTitle} for <code>${safeCode}</code>...</i>`, { parse_mode: "HTML" });
+
+    try {
+      await ctx.editMessageText(`⏳ <i>Fetching live records from server &amp; compiling ${formatTitle} for <code>${safeTitle}</code>...</i>`, { parse_mode: "HTML" });
+    } catch (e) {}
 
     // Fetch live submission records from Backend API
     const submissions = await BackendDataService.fetchSubmissionsByStream(examCode);
@@ -325,11 +347,11 @@ export async function handleFormatSelectedAction(ctx: Context & { match?: RegExp
     let filename: string;
 
     if (format === "raw") {
-      pdfBuffer = await PdfGeneratorService.generateRawMarksReportPdf(examCode, submissions);
-      filename = `HP_RankCheck_${examCode}_Raw_Marks.pdf`;
+      pdfBuffer = await PdfGeneratorService.generateRawMarksReportPdf(displayTitle, submissions);
+      filename = `HP_RankCheck_${displayTitle.replace(/\s+/g, "_")}_Raw_Marks.pdf`;
     } else {
-      pdfBuffer = await PdfGeneratorService.generateShiftReportPdf(examCode, submissions);
-      filename = `HP_RankCheck_${examCode}_Shift_Report.pdf`;
+      pdfBuffer = await PdfGeneratorService.generateShiftReportPdf(displayTitle, submissions);
+      filename = `HP_RankCheck_${displayTitle.replace(/\s+/g, "_")}_Shift_Report.pdf`;
     }
 
     // Increment user's daily exam PDF count for non-admins
@@ -346,7 +368,7 @@ export async function handleFormatSelectedAction(ctx: Context & { match?: RegExp
       {
         caption: 
           `📄 <b>${formatTitle}</b>\n` +
-          `🏆 <b>Target Exam</b>: <code>${safeCode}</code>\n` +
+          `🏆 <b>Target Exam</b>: <code>${safeTitle}</code>\n` +
           `👥 <b>Evaluated Candidates</b>: ${submissions.length}\n` +
           `📊 <b>Daily Exam Quota</b>: ${updatedCount}\n` +
           `📅 <b>Generated</b>: ${new Date().toLocaleDateString()}`,
@@ -361,7 +383,6 @@ export async function handleFormatSelectedAction(ctx: Context & { match?: RegExp
 
 /**
  * 5. Triggered on /gk_quiz_pdf command.
- * Instant loading message sent before fetching quiz question bank.
  */
 export async function handleGkQuizPdfCommand(ctx: Context) {
   try {

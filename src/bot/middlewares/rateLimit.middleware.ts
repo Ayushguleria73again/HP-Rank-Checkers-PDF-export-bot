@@ -4,7 +4,7 @@ const userLastCommandTime: Map<number, number> = new Map();
 const userDailyExamPdfMap: Map<string, { count: number; dateStr: string }> = new Map();
 const userDailyQuizPdfMap: Map<string, { count: number; dateStr: string }> = new Map();
 
-const RATE_LIMIT_MS = 3000; // 3 seconds cooldown between commands
+const RATE_LIMIT_MS = 2500; // 2.5 seconds cooldown between commands
 
 /**
  * Returns today's date string in IST format (YYYY-MM-DD)
@@ -89,7 +89,7 @@ export function incrementUserDailyQuizPdfCount(userId: string | number): number 
 }
 
 /**
- * Anti-spam 3-second cooldown rate limit middleware
+ * Anti-spam rate limit middleware (clean toast answer for callbacks to prevent group chat clutter)
  */
 export async function rateLimitMiddleware(ctx: Context, next: () => Promise<void>) {
   const userId = ctx.from?.id;
@@ -99,8 +99,13 @@ export async function rateLimitMiddleware(ctx: Context, next: () => Promise<void
   const lastTime = userLastCommandTime.get(userId) || 0;
 
   if (now - lastTime < RATE_LIMIT_MS) {
-    try { await ctx.answerCbQuery("⚠️ Please wait a few seconds."); } catch (e) {}
-    await ctx.reply("⚠️ Please wait a few seconds before requesting another action.");
+    if (ctx.callbackQuery) {
+      try {
+        await ctx.answerCbQuery("⚠️ Please wait a few seconds before tapping again.");
+      } catch (e) {}
+    } else {
+      await ctx.reply("⚠️ Please wait a few seconds before requesting another action.");
+    }
     return;
   }
 
