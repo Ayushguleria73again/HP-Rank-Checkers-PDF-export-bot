@@ -3,6 +3,25 @@ import { CONSTANTS } from "../config/constants";
 import { BackendSubmission } from "./backendData.service";
 import { QuizQuestion } from "./quizData.service";
 
+/**
+ * Abbreviates long category strings so they fit cleanly in table columns without overlapping score
+ */
+function cleanCategoryName(cat: string): string {
+  if (!cat) return "GEN";
+  const upper = cat.trim().toUpperCase();
+
+  if (upper.includes("OTHER BACKWARD") || upper.includes("OBC")) return "OBC";
+  if (upper.includes("SCHEDULED CASTE") || upper.includes("(SC)")) return "SC";
+  if (upper.includes("SCHEDULED TRIBE") || upper.includes("(ST)")) return "ST";
+  if (upper.includes("ECONOMICALLY WEAKER") || upper.includes("EWS")) return "EWS";
+  if (upper.includes("UNRESERVED") || upper.includes("GENERAL") || upper.includes("GEN")) return "GEN";
+
+  if (cat.length > 15) {
+    return cat.slice(0, 14) + "…";
+  }
+  return cat;
+}
+
 export class PdfGeneratorService {
   /**
    * Generates a Shift-wise PDF Report (categorized chronologically by shifts)
@@ -42,6 +61,7 @@ export class PdfGeneratorService {
 
       const timestamp = new Date().toLocaleString();
 
+      // Top Banner Header
       doc
         .fillColor("#0f172a")
         .rect(0, 0, doc.page.width, 95)
@@ -89,6 +109,7 @@ export class PdfGeneratorService {
 
           currentY += 18;
 
+          // Header Bar
           doc
             .fillColor("#0f172a")
             .rect(40, currentY, doc.page.width - 80, 22)
@@ -98,11 +119,11 @@ export class PdfGeneratorService {
             .fillColor("#ffffff")
             .fontSize(9)
             .font("Helvetica-Bold")
-            .text("#", 48, currentY + 6)
-            .text("ID / Roll", 85, currentY + 6)
-            .text("Category", 230, currentY + 6)
-            .text("Score", 340, currentY + 6)
-            .text("Shift Detail", 430, currentY + 6);
+            .text("#", 48, currentY + 6, { width: 25 })
+            .text("ID / Roll", 75, currentY + 6, { width: 110 })
+            .text("Category", 190, currentY + 6, { width: 120 })
+            .text("Score", 320, currentY + 6, { width: 65 })
+            .text("Shift Detail", 390, currentY + 6, { width: 160 });
 
           currentY += 22;
 
@@ -116,17 +137,29 @@ export class PdfGeneratorService {
             doc.fillColor(rowBg).rect(40, currentY, doc.page.width - 80, 20).fill();
 
             const rollShort = sub.rollNumber || (sub._id ? sub._id.slice(-8).toUpperCase() : "N/A");
+            const categoryClean = cleanCategoryName(sub.category);
             const scoreFormatted = typeof sub.score === "number" ? sub.score.toFixed(2) : String(sub.score || "0.00");
 
             doc
               .fillColor("#334155")
               .fontSize(8.5)
               .font("Helvetica")
-              .text(String(sIdx + 1), 48, currentY + 5)
-              .text(rollShort, 85, currentY + 5)
-              .text(sub.category || "General", 230, currentY + 5)
-              .text(scoreFormatted, 340, currentY + 5)
-              .text(sub.shift || "N/A", 430, currentY + 5, { width: 120, height: 15 });
+              .text(String(sIdx + 1), 48, currentY + 5, { width: 25 })
+              .text(rollShort, 75, currentY + 5, { width: 110, height: 15 })
+              .text(categoryClean, 190, currentY + 5, { width: 120, height: 15 });
+
+            // Render Score with Highlighting Font
+            doc
+              .fillColor("#0f172a")
+              .fontSize(9)
+              .font("Helvetica-Bold")
+              .text(scoreFormatted, 320, currentY + 5, { width: 65, height: 15 });
+
+            doc
+              .fillColor("#334155")
+              .fontSize(8.5)
+              .font("Helvetica")
+              .text(sub.shift || "N/A", 390, currentY + 5, { width: 160, height: 15 });
 
             currentY += 20;
           });
@@ -135,6 +168,7 @@ export class PdfGeneratorService {
         });
       }
 
+      // Page Footer
       doc
         .fontSize(8)
         .fillColor("#94a3b8")
@@ -197,11 +231,11 @@ export class PdfGeneratorService {
         .fillColor("#ffffff")
         .fontSize(9)
         .font("Helvetica-Bold")
-        .text("Rank", 48, currentY + 7)
-        .text("ID / Roll Number", 100, currentY + 7)
-        .text("Category", 250, currentY + 7)
-        .text("Raw Score", 360, currentY + 7)
-        .text("Exam Date / Shift", 440, currentY + 7);
+        .text("Rank", 48, currentY + 7, { width: 35 })
+        .text("ID / Roll Number", 85, currentY + 7, { width: 120 })
+        .text("Category", 210, currentY + 7, { width: 110 })
+        .text("Raw Score", 330, currentY + 7, { width: 65 })
+        .text("Exam Date / Shift", 400, currentY + 7, { width: 150 });
 
       currentY += 24;
 
@@ -222,17 +256,28 @@ export class PdfGeneratorService {
           doc.fillColor(rowBg).rect(40, currentY, doc.page.width - 80, 20).fill();
 
           const rollShort = sub.rollNumber || (sub._id ? sub._id.slice(-8).toUpperCase() : "N/A");
+          const categoryClean = cleanCategoryName(sub.category);
           const scoreFormatted = typeof sub.score === "number" ? sub.score.toFixed(2) : String(sub.score || "0.00");
 
           doc
             .fillColor("#1e1b4b")
             .fontSize(8.5)
             .font("Helvetica")
-            .text(String(idx + 1), 48, currentY + 5)
-            .text(rollShort, 100, currentY + 5)
-            .text(sub.category || "General", 250, currentY + 5)
-            .text(scoreFormatted, 360, currentY + 5)
-            .text(sub.shift || "N/A", 440, currentY + 5, { width: 120, height: 15 });
+            .text(String(idx + 1), 48, currentY + 5, { width: 35 })
+            .text(rollShort, 85, currentY + 5, { width: 120, height: 15 })
+            .text(categoryClean, 210, currentY + 5, { width: 110, height: 15 });
+
+          doc
+            .fillColor("#1e1b4b")
+            .fontSize(9)
+            .font("Helvetica-Bold")
+            .text(scoreFormatted, 330, currentY + 5, { width: 65, height: 15 });
+
+          doc
+            .fillColor("#1e1b4b")
+            .fontSize(8.5)
+            .font("Helvetica")
+            .text(sub.shift || "N/A", 400, currentY + 5, { width: 150, height: 15 });
 
           currentY += 20;
         });
