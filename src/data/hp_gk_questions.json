@@ -1,0 +1,1178 @@
+[
+  {
+    "question": "Which is the highest mountain peak in Himachal Pradesh?",
+    "options": ["Reo Purgyil", "Hanuman Tibba", "Shitidhar", "Kinner Kailash"],
+    "correctIndex": 0,
+    "explanation": "Reo Purgyil (6,816 m) in Kinnaur district is the highest peak in Himachal Pradesh.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "On which date did Himachal Pradesh attain full statehood as the 18th state of India?",
+    "options": ["15th April 1948", "25th January 1971", "1st November 1966", "26th January 1950"],
+    "correctIndex": 1,
+    "explanation": "HP became the 18th state on 25th January 1971. Dr. Y.S. Parmar was the first CM.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Who was the first Chief Minister of Himachal Pradesh?",
+    "options": ["Shanta Kumar", "Ram Lal Thakur", "Dr. Yashwant Singh Parmar", "Virbhadra Singh"],
+    "correctIndex": 2,
+    "explanation": "Dr. Y.S. Parmar is the founder and first CM of Himachal Pradesh.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which river in Himachal Pradesh is known as 'Vipasa' in Vedic literature?",
+    "options": ["Satluj", "Beas", "Ravi", "Chenab"],
+    "correctIndex": 1,
+    "explanation": "The Beas river is called 'Vipasa' in Vedic texts and 'Hyphasis' in Greek literature.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which is the largest natural lake in Himachal Pradesh?",
+    "options": ["Prashar Lake", "Chandratal Lake", "Renuka Lake", "Khajjiar Lake"],
+    "correctIndex": 2,
+    "explanation": "Renuka Lake in Sirmaur district is the largest natural lake in HP.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The famous 'Minjar Fair' is celebrated in which district?",
+    "options": ["Mandi", "Chamba", "Kullu", "Kangra"],
+    "correctIndex": 1,
+    "explanation": "Minjar Fair is an annual harvest festival celebrated at Chowgan in Chamba.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "In which district is the 'Great Himalayan National Park' located?",
+    "options": ["Lahaul & Spiti", "Kinnaur", "Kullu", "Shimla"],
+    "correctIndex": 2,
+    "explanation": "GHNP in Kullu district was declared a UNESCO World Heritage Site in 2014.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which river enters Himachal Pradesh at Shipki Pass in Kinnaur?",
+    "options": ["Yamuna", "Satluj", "Ravi", "Chenab"],
+    "correctIndex": 1,
+    "explanation": "The Satluj enters HP at Shipki La pass from Tibet.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "How many Vidhan Sabha seats are there in Himachal Pradesh?",
+    "options": ["60", "68", "72", "52"],
+    "correctIndex": 1,
+    "explanation": "Himachal Pradesh has 68 Legislative Assembly constituencies.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which valley is popularly known as the 'Valley of Gods'?",
+    "options": ["Kangra Valley", "Chamba Valley", "Kullu Valley", "Spiti Valley"],
+    "correctIndex": 2,
+    "explanation": "Kullu Valley is world-famous as the 'Valley of Gods' (Dev Bhumi).",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Who was the first Governor of Himachal Pradesh after statehood in 1971?",
+    "options": ["S. Chakravarti", "N.C. Mehta", "K.C. Mehta", "Major General Himmat Singh"],
+    "correctIndex": 0,
+    "explanation": "S. Chakravarti was the first Governor of HP from 1971 to 1977.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which pass connects Lahaul Valley with Spiti Valley?",
+    "options": ["Rohtang Pass", "Kunzum Pass", "Jalori Pass", "Baralacha Pass"],
+    "correctIndex": 1,
+    "explanation": "Kunzum Pass (4,551 m) connects Lahaul with Spiti valley.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "In which district is the Nathpa Jhakri hydro project located?",
+    "options": ["Mandi", "Kinnaur", "Shimla", "Chamba"],
+    "correctIndex": 1,
+    "explanation": "Nathpa Jhakri (1500 MW) is on the Satluj river in Kinnaur district.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "What is the winter capital of Himachal Pradesh?",
+    "options": ["Solan", "Dharamshala", "Mandi", "Hamirpur"],
+    "correctIndex": 1,
+    "explanation": "Dharamshala was declared the second/winter capital of HP in 2017.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which ruler founded the city of Mandi in 1527 AD?",
+    "options": ["Ajbar Sen", "Bahu Sen", "Giri Sen", "Bir Sen"],
+    "correctIndex": 0,
+    "explanation": "Raja Ajbar Sen founded Mandi in 1527 AD and built the Bhootnath Temple.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The historic 'Dhami Firing Tragedy' took place in which year?",
+    "options": ["1939", "1942", "1947", "1930"],
+    "correctIndex": 0,
+    "explanation": "Dhami firing occurred on 16th July 1939 under Bhagavata Tauta's leadership.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which district has the lowest population density in HP?",
+    "options": ["Kinnaur", "Lahaul & Spiti", "Chamba", "Sirmaur"],
+    "correctIndex": 1,
+    "explanation": "Lahaul & Spiti has only 2 persons per sq. km (Census 2011).",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which place in HP is called 'Mini Switzerland'?",
+    "options": ["Solan", "Khajjiar", "Kasauli", "Manali"],
+    "correctIndex": 1,
+    "explanation": "Khajjiar was named 'Mini Switzerland' by Swiss Envoy on 7th July 1992.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "What is the ancient name of Kangra?",
+    "options": ["Trigarta", "Dhameri", "Kuluta", "Brahmapura"],
+    "correctIndex": 0,
+    "explanation": "Kangra was anciently known as Trigarta (land of three rivers).",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Tabo Monastery is located in which district?",
+    "options": ["Kinnaur", "Lahaul & Spiti", "Kullu", "Chamba"],
+    "correctIndex": 1,
+    "explanation": "Tabo Monastery in Spiti was founded in 996 AD. Called 'Ajanta of the Himalayas'.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Who was given the title 'Pahari Gandhi'?",
+    "options": ["Baba Kanshi Ram", "Bhagmal Sautha", "Dr. Y.S. Parmar", "Padam Dev"],
+    "correctIndex": 0,
+    "explanation": "Baba Kanshi Ram was called 'Pahari Gandhi' by Pt. Nehru in 1937.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which is the longest tunnel on the Kalka-Shimla Railway?",
+    "options": ["Barog Tunnel", "Taradevi Tunnel", "Koti Tunnel", "Solan Tunnel"],
+    "correctIndex": 0,
+    "explanation": "Barog Tunnel (No. 33) is 1,143.61 m long on the UNESCO heritage route.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "In which year was Himachal Pradesh formed as a Chief Commissioner's Province?",
+    "options": ["15th April 1948", "26th January 1950", "1st November 1956", "25th January 1971"],
+    "correctIndex": 0,
+    "explanation": "HP came into existence on 15th April 1948 by merging 30 hill states.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Hidimba Devi Temple in Manali is built in which architectural style?",
+    "options": ["Pagoda Style", "Nagara Style", "Dravidian Style", "Kath-Kuni Style"],
+    "correctIndex": 0,
+    "explanation": "Hidimba Devi Temple was built in 1553 AD by Raja Bahadur Singh in pagoda style.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "How many Lok Sabha seats does Himachal Pradesh have?",
+    "options": ["3", "4", "5", "6"],
+    "correctIndex": 1,
+    "explanation": "HP has 4 Lok Sabha seats: Shimla, Mandi, Kangra, and Hamirpur.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which is the largest man-made lake in Himachal Pradesh?",
+    "options": ["Pandoh Lake", "Chamera Lake", "Govind Sagar Lake", "Pong Lake"],
+    "correctIndex": 2,
+    "explanation": "Govind Sagar in Bilaspur, formed by Bhakra Dam on Satluj, is the largest.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Lavi Fair takes place at which location?",
+    "options": ["Rampur Bushahr", "Sunder Nagar", "Chamba", "Keylong"],
+    "correctIndex": 0,
+    "explanation": "Lavi Fair is an ancient trade fair held at Rampur Bushahr in Shimla district.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which district has the highest literacy rate in HP (Census 2011)?",
+    "options": ["Shimla", "Hamirpur", "Kangra", "Solan"],
+    "correctIndex": 1,
+    "explanation": "Hamirpur recorded the highest literacy rate at 88.15% in Census 2011.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which is the state animal of Himachal Pradesh?",
+    "options": ["Musk Deer", "Snow Leopard", "Himalayan Brown Bear", "Bharal"],
+    "correctIndex": 1,
+    "explanation": "The Snow Leopard is the official state animal of Himachal Pradesh.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which is the state bird of Himachal Pradesh?",
+    "options": ["Monal", "Western Tragopan", "Himalayan Griffon", "Koklass Pheasant"],
+    "correctIndex": 1,
+    "explanation": "The Western Tragopan (Jujurana) is the state bird of HP.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which is the state flower of Himachal Pradesh?",
+    "options": ["Lotus", "Pink Rhododendron", "Sunflower", "Blue Poppy"],
+    "correctIndex": 1,
+    "explanation": "Pink Rhododendron (Rhododendron campanulatum) is the state flower of HP.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which is the state tree of Himachal Pradesh?",
+    "options": ["Pine", "Deodar Cedar", "Oak", "Walnut"],
+    "correctIndex": 1,
+    "explanation": "Deodar Cedar (Cedrus deodara) is the state tree of Himachal Pradesh.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "What is the largest district of HP by area?",
+    "options": ["Shimla", "Kangra", "Chamba", "Lahaul & Spiti"],
+    "correctIndex": 3,
+    "explanation": "Lahaul & Spiti is the largest district by area in HP.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which is the most populous district of Himachal Pradesh?",
+    "options": ["Shimla", "Kangra", "Mandi", "Solan"],
+    "correctIndex": 1,
+    "explanation": "Kangra is the most populous district in Himachal Pradesh.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "In which year was Shimla declared the summer capital of British India?",
+    "options": ["1858", "1864", "1888", "1904"],
+    "correctIndex": 1,
+    "explanation": "Shimla was declared the summer capital of British India in 1864.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which river is the longest in Himachal Pradesh?",
+    "options": ["Beas", "Ravi", "Satluj", "Chenab"],
+    "correctIndex": 2,
+    "explanation": "The Satluj (Sutlej) is the longest river flowing through Himachal Pradesh.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Chenab river is formed by the confluence of which two rivers?",
+    "options": ["Ravi and Beas", "Chandra and Bhaga", "Spiti and Pin", "Parbati and Sainj"],
+    "correctIndex": 1,
+    "explanation": "Chenab is formed by the confluence of Chandra and Bhaga rivers at Tandi.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Where does the Beas river originate?",
+    "options": ["Manasarovar Lake", "Beas Kund near Rohtang", "Bara Bhangal", "Yamunotri Glacier"],
+    "correctIndex": 1,
+    "explanation": "The Beas river originates from Beas Kund, near Rohtang Pass in Kullu district.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which is the state fish of Himachal Pradesh?",
+    "options": ["Rainbow Trout", "Golden Mahseer", "Brown Trout", "Mahaseer"],
+    "correctIndex": 1,
+    "explanation": "Golden Mahseer is the state fish of Himachal Pradesh.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which is the state fruit of Himachal Pradesh?",
+    "options": ["Apricot", "Apple", "Plum", "Cherry"],
+    "correctIndex": 1,
+    "explanation": "Apple is the state fruit of Himachal Pradesh.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which folk dance is the most popular in Himachal Pradesh?",
+    "options": ["Chham", "Nati", "Kiang", "Jhanjhar"],
+    "correctIndex": 1,
+    "explanation": "Nati is the most popular folk dance of Himachal Pradesh.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Kullu Dussehra is celebrated at which ground?",
+    "options": ["Chowgan Ground", "Dhalpur Ground", "Paddal Ground", "Lalpani Ground"],
+    "correctIndex": 1,
+    "explanation": "Kullu Dussehra is celebrated at Dhalpur Ground, Kullu.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which festival is known as the Tibetan New Year in Lahaul-Spiti?",
+    "options": ["Dussehra", "Losar", "Phulaich", "Minjar"],
+    "correctIndex": 1,
+    "explanation": "Losar is celebrated as the Tibetan New Year in Lahaul and Spiti.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Mandi Shivratri Fair is dedicated to which deity?",
+    "options": ["Lord Vishnu", "Lord Shiva", "Goddess Durga", "Lord Rama"],
+    "correctIndex": 1,
+    "explanation": "Mandi Shivratri is a week-long fair dedicated to Lord Shiva.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Who was the longest-serving Chief Minister of Himachal Pradesh?",
+    "options": ["Dr. Y.S. Parmar", "Virbhadra Singh", "Shanta Kumar", "Prem Kumar Dhumal"],
+    "correctIndex": 1,
+    "explanation": "Virbhadra Singh served as CM for six terms, the longest in HP history.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Who was the first woman Governor of Himachal Pradesh?",
+    "options": ["Pratibha Patil", "Sheela Kaul", "Sarojini Naidu", "Sushila Nayar"],
+    "correctIndex": 1,
+    "explanation": "Sheela Kaul was the first woman Governor of Himachal Pradesh.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Who was the first woman Speaker of HP Legislative Assembly?",
+    "options": ["Vidya Stokes", "Asha Kumari", "Pratibha Singh", "Urmil Thakur"],
+    "correctIndex": 0,
+    "explanation": "Vidya Stokes was the first woman Speaker of HP Vidhan Sabha (1993-1998).",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Who was the first Speaker of the HP Legislative Assembly?",
+    "options": ["Pt. Jaiwant Ram", "Thakur Ram Lal", "Shanta Kumar", "Padam Dev"],
+    "correctIndex": 0,
+    "explanation": "Pt. Jaiwant Ram was the first Speaker of HP Vidhan Sabha (1952-1956).",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "How many districts are there in Himachal Pradesh?",
+    "options": ["10", "12", "14", "16"],
+    "correctIndex": 1,
+    "explanation": "HP has 12 districts: Bilaspur, Chamba, Hamirpur, Kangra, Kinnaur, Kullu, Lahaul-Spiti, Mandi, Shimla, Sirmaur, Solan, and Una.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Bhakra Dam is constructed across which river?",
+    "options": ["Beas", "Ravi", "Satluj", "Chenab"],
+    "correctIndex": 2,
+    "explanation": "Bhakra Dam is built on the Satluj river in Bilaspur district.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Bhakra Dam was described as the 'New Temple of Resurgent India' by whom?",
+    "options": ["Mahatma Gandhi", "Jawaharlal Nehru", "Sardar Patel", "Dr. Rajendra Prasad"],
+    "correctIndex": 1,
+    "explanation": "Jawaharlal Nehru described Bhakra Dam as the 'New Temple of Resurgent India'.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "What is the installed capacity of Nathpa Jhakri Hydroelectric Project?",
+    "options": ["1000 MW", "1200 MW", "1500 MW", "2000 MW"],
+    "correctIndex": 2,
+    "explanation": "Nathpa Jhakri, on the Satluj in Kinnaur, has a capacity of 1500 MW.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Chamera Hydroelectric Project is built on which river?",
+    "options": ["Satluj", "Beas", "Ravi", "Yamuna"],
+    "correctIndex": 2,
+    "explanation": "Chamera project (Stages I, II, III) is built on the Ravi river in Chamba.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which reservoir is formed by the Bhakra Dam?",
+    "options": ["Pong Dam Lake", "Chamera Lake", "Gobind Sagar", "Pandoh Lake"],
+    "correctIndex": 2,
+    "explanation": "Gobind Sagar reservoir in Bilaspur is formed by the Bhakra Dam.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The total harnessable hydro potential of HP is approximately?",
+    "options": ["10,000 MW", "15,000 MW", "24,000 MW", "30,000 MW"],
+    "correctIndex": 2,
+    "explanation": "HP has approximately 24,000 MW of harnessable hydroelectric potential.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which agency operates the Nathpa Jhakri project?",
+    "options": ["NHPC", "BBMB", "SJVNL", "NTPC"],
+    "correctIndex": 2,
+    "explanation": "SJVNL (Satluj Jal Vidyut Nigam Ltd) operates Nathpa Jhakri.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Who is considered the founder of the Katoch Dynasty?",
+    "options": ["Bhumachand", "Susharma Chandra", "Hari Chand", "Sansar Chand"],
+    "correctIndex": 1,
+    "explanation": "Susharma Chandra is the legendary founder of the Katoch dynasty (Trigarta).",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The ancient capital of Bushahr Kingdom was?",
+    "options": ["Rampur", "Kamru", "Sarahan", "Reckong Peo"],
+    "correctIndex": 1,
+    "explanation": "Kamru was the ancient capital of the Bushahr princely state.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which king shifted the capital of Chamba from Brahmapura to Chamba?",
+    "options": ["Meru Varman", "Sahil Varman", "Hansa Varman", "Yugankar Varman"],
+    "correctIndex": 1,
+    "explanation": "Raja Sahil Varman shifted the capital and built the Lakshmi Narayan Temple.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Kullu was anciently known by which name?",
+    "options": ["Trigarta", "Kuluta", "Brahmapura", "Dhameri"],
+    "correctIndex": 1,
+    "explanation": "Kullu was anciently known as 'Kuluta', mentioned in Ramayana and Vishnu Purana.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which Raja of Kullu brought the idol of Raghunathji from Ayodhya?",
+    "options": ["Bahadur Singh", "Jagat Singh", "Man Singh", "Vidhi Singh"],
+    "correctIndex": 1,
+    "explanation": "Raja Jagat Singh brought the Raghunathji idol and also shifted the capital to Sultanpur.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Bhimakali Temple at Sarahan is built in which architectural style?",
+    "options": ["Nagara Style", "Kath-Kuni Style", "Dravidian Style", "Pagoda Style"],
+    "correctIndex": 1,
+    "explanation": "Bhimakali Temple uses the Kath-Kuni technique (alternating wood and stone layers).",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Baijnath Temple in Kangra is built in which architectural style?",
+    "options": ["Pagoda Style", "Nagara Style", "Kath-Kuni Style", "Domed Style"],
+    "correctIndex": 1,
+    "explanation": "Baijnath Temple (13th century) is in Nagara style, dedicated to Lord Shiva as Vaidyanath.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Jwala Ji Temple is famous for what unique natural phenomenon?",
+    "options": ["Hot springs", "Eternal flame from rock", "Floating islands", "Underground river"],
+    "correctIndex": 1,
+    "explanation": "Jwala Ji in Kangra is famous for its eternal flame emanating from a rock fissure.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "How many national parks are there in Himachal Pradesh?",
+    "options": ["3", "4", "5", "6"],
+    "correctIndex": 2,
+    "explanation": "HP has 5 national parks: Great Himalayan, Pin Valley, Inderkilla, Khirganga, Simbalbara.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Pin Valley National Park is located in which district?",
+    "options": ["Kullu", "Lahaul & Spiti", "Kinnaur", "Chamba"],
+    "correctIndex": 1,
+    "explanation": "Pin Valley NP is in Lahaul & Spiti, known for Snow Leopards and Siberian Ibex.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which is the smallest wildlife sanctuary in Himachal Pradesh?",
+    "options": ["Shilli", "Majathal", "Renuka", "Kalatop"],
+    "correctIndex": 0,
+    "explanation": "Shilli Wildlife Sanctuary in Solan district is the smallest in HP.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Kalatop-Khajjiar Wildlife Sanctuary is in which district?",
+    "options": ["Kangra", "Chamba", "Kullu", "Mandi"],
+    "correctIndex": 1,
+    "explanation": "Kalatop-Khajjiar Wildlife Sanctuary is located in Chamba district.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Renuka Lake has been designated as a?",
+    "options": ["UNESCO World Heritage Site", "Ramsar Wetland Site", "Biosphere Reserve", "Tiger Reserve"],
+    "correctIndex": 1,
+    "explanation": "Renuka Lake in Sirmaur has been designated as a Ramsar Wetland Site.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Rohtang Pass connects which two valleys?",
+    "options": ["Kullu and Lahaul", "Lahaul and Spiti", "Kullu and Spiti", "Kangra and Kullu"],
+    "correctIndex": 0,
+    "explanation": "Rohtang Pass connects the Kullu Valley with the Lahaul Valley.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Baralacha La pass connects which regions?",
+    "options": ["Kullu and Lahaul", "Lahaul and Ladakh", "Spiti and Kinnaur", "Chamba and Kangra"],
+    "correctIndex": 1,
+    "explanation": "Baralacha La is a high-altitude pass connecting Lahaul (HP) to Ladakh.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "What was the ancient name of Chamba's first capital (modern Bharmour)?",
+    "options": ["Trigarta", "Brahmapura", "Kuluta", "Dhameri"],
+    "correctIndex": 1,
+    "explanation": "Brahmapura (modern Bharmour) was the early capital of the Chamba kingdom.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which lake in Chamba is associated with Lord Shiva?",
+    "options": ["Chandratal", "Manimahesh Lake", "Prashar Lake", "Renuka Lake"],
+    "correctIndex": 1,
+    "explanation": "Manimahesh Lake in Chamba is a sacred lake associated with Lord Shiva.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Where is the Maharana Pratap Sagar (Pong Dam) located?",
+    "options": ["Bilaspur", "Kangra", "Mandi", "Una"],
+    "correctIndex": 1,
+    "explanation": "Pong Dam (Maharana Pratap Sagar) reservoir is located in Kangra district.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Rewalsar Lake, known for its floating islands, is in which district?",
+    "options": ["Shimla", "Mandi", "Kullu", "Kangra"],
+    "correctIndex": 1,
+    "explanation": "Rewalsar Lake in Mandi district is famous for its floating reed islands.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Chandratal Lake ('Moon Lake') is located in which valley?",
+    "options": ["Kullu Valley", "Spiti Valley", "Kangra Valley", "Chamba Valley"],
+    "correctIndex": 1,
+    "explanation": "Chandratal (Moon Lake) is a high-altitude lake in Spiti Valley, Lahaul & Spiti.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which district in HP is famous for apple production?",
+    "options": ["Kangra", "Shimla", "Mandi", "Solan"],
+    "correctIndex": 1,
+    "explanation": "Shimla district (Kotgarh/Thanedar area) is the 'Apple Bowl of India'.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Who introduced apple cultivation in Himachal Pradesh?",
+    "options": ["Lord Dalhousie", "Satyanand Stokes", "Dr. Y.S. Parmar", "Raja Sansar Chand"],
+    "correctIndex": 1,
+    "explanation": "Satyanand Stokes (Samuel Stokes) introduced apple cultivation in Kotgarh in 1916.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Nalwari Fair is a traditional cattle fair held in which district?",
+    "options": ["Mandi", "Bilaspur", "Una", "Kangra"],
+    "correctIndex": 1,
+    "explanation": "Nalwari Fair is a traditional state-level cattle fair held in Bilaspur.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Renuka Fair is held in which district?",
+    "options": ["Bilaspur", "Mandi", "Sirmaur", "Kangra"],
+    "correctIndex": 2,
+    "explanation": "Renuka Fair is a significant religious fair held in Sirmaur district.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Phulaich festival is celebrated in which district?",
+    "options": ["Lahaul & Spiti", "Kinnaur", "Kullu", "Chamba"],
+    "correctIndex": 1,
+    "explanation": "Phulaich (Ookhayang) is celebrated in Kinnaur for the end of summer.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Chham dance is associated with which regions of HP?",
+    "options": ["Kangra and Mandi", "Kinnaur and Lahaul-Spiti", "Shimla and Solan", "Chamba and Kullu"],
+    "correctIndex": 1,
+    "explanation": "Chham is a masked Buddhist dance associated with Kinnaur and Lahaul-Spiti.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which HP district is known as the 'Mushroom City of India'?",
+    "options": ["Shimla", "Kangra", "Solan", "Hamirpur"],
+    "correctIndex": 2,
+    "explanation": "Solan is known as the 'Mushroom City of India' due to its mushroom farming.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Simbalbara National Park is located in which district?",
+    "options": ["Sirmaur", "Una", "Bilaspur", "Solan"],
+    "correctIndex": 0,
+    "explanation": "Simbalbara National Park is located in Sirmaur district.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Inderkilla National Park is located in which district?",
+    "options": ["Shimla", "Kullu", "Mandi", "Kangra"],
+    "correctIndex": 1,
+    "explanation": "Inderkilla National Park is in Kullu district of Himachal Pradesh.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Who was the founder of the Chamba State?",
+    "options": ["Sahil Varman", "Maru Varman", "Sansar Chand", "Susharma Chandra"],
+    "correctIndex": 1,
+    "explanation": "Maru Varman (c. 550 AD) founded the Chamba state with capital at Brahmapura.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Raja Sansar Chand is associated with which princely state?",
+    "options": ["Chamba", "Kangra", "Bushahr", "Kullu"],
+    "correctIndex": 1,
+    "explanation": "Raja Sansar Chand was a famous ruler of Kangra known for patronizing Kangra paintings.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Kangra school of painting flourished under whose patronage?",
+    "options": ["Raja Jagat Singh", "Raja Sansar Chand", "Raja Sahil Varman", "Raja Kehri Singh"],
+    "correctIndex": 1,
+    "explanation": "Kangra miniature paintings flourished under Raja Sansar Chand in the 18th century.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which Mughal emperor attacked the Kangra Fort in 1009 AD?",
+    "options": ["Babur", "Mahmud of Ghazni", "Aurangzeb", "Akbar"],
+    "correctIndex": 1,
+    "explanation": "Mahmud of Ghazni attacked Kangra (Nagarkot) Fort in 1009 AD.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Masrur Rock-Cut Temple (monolithic) is located in which district?",
+    "options": ["Mandi", "Kangra", "Chamba", "Shimla"],
+    "correctIndex": 1,
+    "explanation": "Masrur Rock-Cut Temples in Kangra are 8th-century monolithic stone temples.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Atal Tunnel (Rohtang) connects Manali with which place?",
+    "options": ["Keylong (Lahaul)", "Kaza (Spiti)", "Chamba", "Dharamshala"],
+    "correctIndex": 0,
+    "explanation": "Atal Tunnel (9.02 km) connects Manali with Lahaul Valley (near Keylong).",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "What is the length of the Atal Tunnel?",
+    "options": ["5.02 km", "7.02 km", "9.02 km", "11.02 km"],
+    "correctIndex": 2,
+    "explanation": "Atal Tunnel is 9.02 km long, the world's longest highway tunnel above 10,000 ft.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "In which year was the Atal Tunnel inaugurated?",
+    "options": ["2018", "2019", "2020", "2021"],
+    "correctIndex": 2,
+    "explanation": "Atal Tunnel was inaugurated on 3rd October 2020 by PM Narendra Modi.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which pass is used as an India-China border crossing in Kinnaur?",
+    "options": ["Rohtang Pass", "Shipki La", "Kunzum Pass", "Jalori Pass"],
+    "correctIndex": 1,
+    "explanation": "Shipki La in Kinnaur is an India-China (Tibet) border crossing point.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Jalori Pass is located in which district?",
+    "options": ["Kullu", "Shimla", "Mandi", "Kangra"],
+    "correctIndex": 0,
+    "explanation": "Jalori Pass (3,120 m) connects Kullu with Shimla via the Seraj Valley.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which district of HP shares a border with Tibet (China)?",
+    "options": ["Lahaul & Spiti", "Kinnaur", "Kullu", "Both Lahaul-Spiti and Kinnaur"],
+    "correctIndex": 3,
+    "explanation": "Both Lahaul-Spiti and Kinnaur districts share borders with Tibet (China).",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Pandoh Dam is built on which river?",
+    "options": ["Satluj", "Beas", "Ravi", "Chenab"],
+    "correctIndex": 1,
+    "explanation": "Pandoh Dam is built on the Beas river in Mandi district.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which is the oldest princely state among the Shimla Hill States?",
+    "options": ["Kutlehar", "Bushahr", "Keonthal", "Jubbal"],
+    "correctIndex": 1,
+    "explanation": "Bushahr is one of the oldest princely states in the Shimla Hill States.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Raja Kehri Singh of Bushahr is known by which nickname?",
+    "options": ["Pahari Gandhi", "Ajanbahu", "Tiger of Shimla", "Lion of Punjab"],
+    "correctIndex": 1,
+    "explanation": "Raja Kehri Singh was called 'Ajanbahu' because his arms reached his knees.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Triloknath Temple in Lahaul is sacred to both?",
+    "options": ["Hindus and Sikhs", "Hindus and Buddhists", "Buddhists and Jains", "Hindus and Jains"],
+    "correctIndex": 1,
+    "explanation": "Triloknath Temple in Lahaul is revered by both Hindus and Buddhists.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Where is the Key Monastery (Ki Gompa) located?",
+    "options": ["Kinnaur", "Lahaul", "Spiti Valley", "Kullu"],
+    "correctIndex": 2,
+    "explanation": "Key (Ki) Monastery is the largest monastery in Spiti Valley at 4,166 m.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Prashar Lake is located near which town?",
+    "options": ["Kullu", "Mandi", "Shimla", "Chamba"],
+    "correctIndex": 1,
+    "explanation": "Prashar Lake is near Mandi at 2,730 m, with a floating island and pagoda temple.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which town in HP is known as the 'Gateway to Spiti'?",
+    "options": ["Keylong", "Kaza", "Rampur", "Reckong Peo"],
+    "correctIndex": 3,
+    "explanation": "Reckong Peo in Kinnaur is considered the gateway to Spiti Valley.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Bara Shigri Glacier is the largest glacier in which state?",
+    "options": ["Uttarakhand", "Himachal Pradesh", "Jammu & Kashmir", "Sikkim"],
+    "correctIndex": 1,
+    "explanation": "Bara Shigri is the largest glacier in HP, located in Lahaul & Spiti.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Who was the first Lt. Governor of Himachal Pradesh?",
+    "options": ["S. Chakravarti", "Major General Himmat Singh", "Bajrang Bahadur", "N.C. Mehta"],
+    "correctIndex": 1,
+    "explanation": "Major General Himmat Singh was the first Lt. Governor of HP (before statehood).",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Indian Institute of Advanced Study (IIAS) is located in which building in Shimla?",
+    "options": ["Barnes Court", "Viceregal Lodge", "Gorton Castle", "Auckland House"],
+    "correctIndex": 1,
+    "explanation": "IIAS is housed in the Viceregal Lodge (Rashtrapati Niwas) in Shimla.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Simla Agreement (1972) was signed between India and which country?",
+    "options": ["China", "Pakistan", "Nepal", "Bangladesh"],
+    "correctIndex": 1,
+    "explanation": "The Simla Agreement was signed between India and Pakistan on 2 July 1972.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which hill station was established by the British and named after Lord Dalhousie?",
+    "options": ["Shimla", "Dalhousie", "Kasauli", "Chail"],
+    "correctIndex": 1,
+    "explanation": "Dalhousie in Chamba district was named after Lord Dalhousie, the British Viceroy.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Chail Palace, once the highest cricket ground in the world, is in which district?",
+    "options": ["Shimla", "Solan", "Sirmaur", "Mandi"],
+    "correctIndex": 1,
+    "explanation": "Chail in Solan district has the world's highest cricket ground at 2,444 m.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Shoolini Fair is celebrated in which town of HP?",
+    "options": ["Shimla", "Solan", "Una", "Hamirpur"],
+    "correctIndex": 1,
+    "explanation": "Shoolini Fair (dedicated to Goddess Shoolini) is celebrated in Solan.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which HP district borders Punjab to its west?",
+    "options": ["Una", "Sirmaur", "Bilaspur", "Hamirpur"],
+    "correctIndex": 0,
+    "explanation": "Una district shares its western border with the state of Punjab.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Suhi Fair (dedicated to Rani Suhi) is celebrated in which district?",
+    "options": ["Kangra", "Chamba", "Kullu", "Mandi"],
+    "correctIndex": 1,
+    "explanation": "Suhi Fair is celebrated in Chamba, named after the brave Queen Suhi.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Kangra Fort is one of the oldest forts in India. In which district is it?",
+    "options": ["Chamba", "Kangra", "Mandi", "Shimla"],
+    "correctIndex": 1,
+    "explanation": "Kangra Fort (Nagarkot Fort) in Kangra is one of the oldest forts in India.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which earthquake devastated Kangra in 1905?",
+    "options": ["Kangra Earthquake", "Shimla Earthquake", "Dharamshala Earthquake", "Lahaul Earthquake"],
+    "correctIndex": 0,
+    "explanation": "The 1905 Kangra Earthquake (7.8 magnitude) killed around 20,000 people.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Where is the headquarters of the Central Tibetan Administration (CTA) located?",
+    "options": ["Shimla", "Dharamshala", "Manali", "Dalhousie"],
+    "correctIndex": 1,
+    "explanation": "The CTA (Tibetan Govt. in Exile) is headquartered in Dharamshala, Kangra.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which Dalai Lama resides in McLeod Ganj, Dharamshala?",
+    "options": ["13th Dalai Lama", "14th Dalai Lama", "15th Dalai Lama", "12th Dalai Lama"],
+    "correctIndex": 1,
+    "explanation": "The 14th Dalai Lama, Tenzin Gyatso, has been residing in McLeod Ganj since 1960.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Sobha Singh Art Gallery is located at which place?",
+    "options": ["Kullu", "Andretta (Kangra)", "Manali", "Shimla"],
+    "correctIndex": 1,
+    "explanation": "The Sobha Singh Art Gallery is at Andretta in Kangra, showcasing his famous paintings.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which Mughal emperor built the Mughal Garden at Rampur?",
+    "options": ["Babur", "Akbar", "Jahangir", "Shah Jahan"],
+    "correctIndex": 2,
+    "explanation": "Emperor Jahangir was known for his love of Himachal's beauty and built gardens.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Naggar Castle, a medieval fort near Manali, was built by which dynasty?",
+    "options": ["Katoch Dynasty", "Kullu Rajas", "Chamba Dynasty", "Bushahr Dynasty"],
+    "correctIndex": 1,
+    "explanation": "Naggar Castle was built by the Kullu Rajas and served as their capital for 1400 years.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Kamrunag Lake, associated with a deity, is in which district?",
+    "options": ["Mandi", "Kullu", "Shimla", "Chamba"],
+    "correctIndex": 0,
+    "explanation": "Kamrunag Lake in Mandi is a sacred high-altitude lake associated with the deity Kamrunag.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which district of HP is known as 'Devbhoomi' (Land of Gods)?",
+    "options": ["Shimla", "Kangra", "Kullu", "All districts of HP"],
+    "correctIndex": 2,
+    "explanation": "Kullu district is specifically referred to as 'Devbhoomi' or the 'Valley of Gods'.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Palampur town in Kangra is famous for cultivation of which crop?",
+    "options": ["Apple", "Tea", "Saffron", "Rice"],
+    "correctIndex": 1,
+    "explanation": "Palampur in Kangra is the 'Tea Capital of North India'.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Bilaspur district was formerly the capital of which princely state?",
+    "options": ["Bushahr", "Kahlur", "Kutlehar", "Nadaun"],
+    "correctIndex": 1,
+    "explanation": "Bilaspur was the capital of the Kahlur princely state.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Hamirpur district is named after which ruler?",
+    "options": ["Hamir Chand", "Hamir Singh", "Raja Hamir", "Hamir Dev"],
+    "correctIndex": 0,
+    "explanation": "Hamirpur is named after Raja Hamir Chand of the Katoch dynasty.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which Himachal district was earlier a part of Mahasu district?",
+    "options": ["Solan", "Una", "Hamirpur", "Kangra"],
+    "correctIndex": 0,
+    "explanation": "Solan was carved out from the erstwhile Mahasu district on 1 Sept 1972.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "What is the literacy rate of Himachal Pradesh as per Census 2011?",
+    "options": ["73.87%", "82.80%", "79.50%", "88.15%"],
+    "correctIndex": 1,
+    "explanation": "HP's overall literacy rate is 82.80% (Census 2011), among the highest in India.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Roerich Art Gallery is located at which place in HP?",
+    "options": ["Shimla", "Naggar (Kullu)", "Chamba", "Dharamshala"],
+    "correctIndex": 1,
+    "explanation": "Nicholas Roerich Art Gallery is at Naggar in Kullu, his former estate.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which movement in HP was known as the 'Pajhota Movement'?",
+    "options": ["Anti-tax movement in Sirmaur", "Freedom struggle in Kangra", "Peasant revolt in Mandi", "Anti-British revolt in Kullu"],
+    "correctIndex": 0,
+    "explanation": "The Pajhota Movement was an anti-tax struggle in Sirmaur against unjust taxation.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which famous scientist/author lived in Naggar and painted HP landscapes?",
+    "options": ["Thomas Hardy", "Nicholas Roerich", "Mark Twain", "Rudyard Kipling"],
+    "correctIndex": 1,
+    "explanation": "Russian painter Nicholas Roerich lived in Naggar and painted HP's Himalayan landscapes.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Gaiety Theatre, a heritage building, is located in which city?",
+    "options": ["Dharamshala", "Shimla", "Mandi", "Dalhousie"],
+    "correctIndex": 1,
+    "explanation": "Gaiety Theatre on The Mall in Shimla is a Victorian-era heritage theatre built in 1887.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which river flows through the Sirmaur district of HP?",
+    "options": ["Beas", "Ravi", "Yamuna", "Chenab"],
+    "correctIndex": 2,
+    "explanation": "The Yamuna river flows through Sirmaur district of Himachal Pradesh.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Spiti River is a tributary of which major river?",
+    "options": ["Beas", "Satluj", "Chenab", "Ravi"],
+    "correctIndex": 1,
+    "explanation": "The Spiti River joins the Satluj river near Khab in Kinnaur district.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which is the coldest inhabited place in Himachal Pradesh?",
+    "options": ["Manali", "Keylong", "Kaza", "Kalpa"],
+    "correctIndex": 2,
+    "explanation": "Kaza in Spiti Valley is one of the coldest inhabited places in HP.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Hatkoti Temple is located in which district?",
+    "options": ["Shimla", "Kullu", "Mandi", "Kangra"],
+    "correctIndex": 0,
+    "explanation": "Hatkoti Temple dedicated to Goddess Hateshwari is in Shimla district.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The famous Dharamshala Cricket Stadium (HPCA) is at what altitude?",
+    "options": ["1,200 m", "1,457 m", "2,000 m", "800 m"],
+    "correctIndex": 1,
+    "explanation": "HPCA Stadium in Dharamshala at 1,457 m is one of the highest cricket stadiums.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which pass was historically used for the silk route trade in HP?",
+    "options": ["Rohtang Pass", "Shipki La", "Kunzum Pass", "Jalori Pass"],
+    "correctIndex": 1,
+    "explanation": "Shipki La was historically part of the ancient silk route between India and Tibet.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Tirthan Valley, known for eco-tourism, is near which national park?",
+    "options": ["Pin Valley NP", "Great Himalayan NP", "Simbalbara NP", "Inderkilla NP"],
+    "correctIndex": 1,
+    "explanation": "Tirthan Valley in Kullu lies near the Great Himalayan National Park.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Majathal Wildlife Sanctuary is in which district?",
+    "options": ["Solan", "Shimla", "Kangra", "Mandi"],
+    "correctIndex": 0,
+    "explanation": "Majathal Wildlife Sanctuary is located in Solan district.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Parvati Valley and Kheerganga hot springs are in which district?",
+    "options": ["Shimla", "Chamba", "Kullu", "Mandi"],
+    "correctIndex": 2,
+    "explanation": "Parvati Valley and Kheerganga hot springs are in Kullu district.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which HP district was the last to be formed (in 1972)?",
+    "options": ["Hamirpur", "Una", "Solan", "All three were formed in 1972"],
+    "correctIndex": 3,
+    "explanation": "Hamirpur, Una, and Solan districts were all carved out on 1 September 1972.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Surajtal Lake, one of the highest lakes in India, is near which pass?",
+    "options": ["Rohtang", "Baralacha La", "Kunzum", "Shipki La"],
+    "correctIndex": 1,
+    "explanation": "Surajtal Lake (4,890 m) is near Baralacha La pass in Lahaul & Spiti.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which Buddhist monastery in Spiti was founded by Rinchen Zangpo?",
+    "options": ["Key Monastery", "Tabo Monastery", "Dhankar Monastery", "Kungri Monastery"],
+    "correctIndex": 1,
+    "explanation": "Tabo Monastery was founded by Rinchen Zangpo (Lotsawa) in 996 AD.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Dhankar Monastery and Fort is located in which valley?",
+    "options": ["Kullu Valley", "Spiti Valley", "Lahaul Valley", "Kangra Valley"],
+    "correctIndex": 1,
+    "explanation": "Dhankar is perched at the confluence of Spiti and Pin rivers in Spiti Valley.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Bhuri Singh Museum, which preserves Chamba's cultural heritage, is in?",
+    "options": ["Mandi", "Chamba", "Kangra", "Shimla"],
+    "correctIndex": 1,
+    "explanation": "Bhuri Singh Museum in Chamba houses Pahari miniature paintings and artifacts.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The 'Chamba Rumal' is a famous handicraft of embroidery from which district?",
+    "options": ["Kangra", "Kullu", "Chamba", "Shimla"],
+    "correctIndex": 2,
+    "explanation": "Chamba Rumal is a traditional embroidered handkerchief unique to Chamba district.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Kullu Shawl is a traditional textile product of which district?",
+    "options": ["Kangra", "Chamba", "Kullu", "Shimla"],
+    "correctIndex": 2,
+    "explanation": "Kullu Shawl is a GI-tagged handwoven woolen textile from Kullu district.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which HP town is known as the 'Varanasi of the Hills'?",
+    "options": ["Shimla", "Mandi", "Chamba", "Dharamshala"],
+    "correctIndex": 1,
+    "explanation": "Mandi is called the 'Varanasi of the Hills' for its 81+ temples.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Naina Devi Temple is located in which district?",
+    "options": ["Kangra", "Bilaspur", "Shimla", "Mandi"],
+    "correctIndex": 1,
+    "explanation": "Naina Devi Temple, one of the Shakti Peeths, is in Bilaspur district.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which city in HP is known as the 'Queen of Hills'?",
+    "options": ["Manali", "Shimla", "Dharamshala", "Dalhousie"],
+    "correctIndex": 1,
+    "explanation": "Shimla is called the 'Queen of Hills' since the British era.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Beas river leaves Himachal Pradesh near which town?",
+    "options": ["Pandoh", "Mirthal", "Nadaun", "Sujanpur"],
+    "correctIndex": 1,
+    "explanation": "The Beas river exits HP near Mirthal and enters Punjab.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Ravi river originates from which area in HP?",
+    "options": ["Beas Kund", "Bara Bhangal", "Shipki La", "Yamunotri"],
+    "correctIndex": 1,
+    "explanation": "The Ravi originates from near Bara Bhangal in Kangra district.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Khirganga National Park is located in which district?",
+    "options": ["Shimla", "Mandi", "Kullu", "Chamba"],
+    "correctIndex": 2,
+    "explanation": "Khirganga National Park is in the Parvati Valley, Kullu district.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which HP district has the smallest area?",
+    "options": ["Una", "Hamirpur", "Bilaspur", "Solan"],
+    "correctIndex": 1,
+    "explanation": "Hamirpur is the smallest district by area in Himachal Pradesh.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The famous Sujanpur Tihra Fort was built by which Katoch ruler?",
+    "options": ["Sansar Chand", "Hamir Chand", "Ghamand Chand", "Alam Chand"],
+    "correctIndex": 0,
+    "explanation": "Raja Sansar Chand built the Sujanpur Tihra Fort on the banks of the Beas.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Pong Dam on the Beas river is in which district?",
+    "options": ["Kangra", "Mandi", "Bilaspur", "Una"],
+    "correctIndex": 0,
+    "explanation": "Pong Dam (Maharana Pratap Sagar) is located in Kangra district on the Beas.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which lake in Spiti Valley is named after the moon?",
+    "options": ["Surajtal", "Chandratal", "Prashar", "Manimahesh"],
+    "correctIndex": 1,
+    "explanation": "Chandratal means 'Moon Lake', located at 4,300 m in Spiti Valley.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Surajtal Lake's name means?",
+    "options": ["Moon Lake", "Sun Lake", "Star Lake", "Sky Lake"],
+    "correctIndex": 1,
+    "explanation": "Surajtal means 'Sun Lake' (Suraj = Sun, Tal = Lake).",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Chamunda Devi Temple is near which town in Kangra?",
+    "options": ["Dharamshala", "Palampur", "Nadaun", "Jawali"],
+    "correctIndex": 1,
+    "explanation": "Chamunda Devi Temple is located near Palampur in Kangra district.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which Sikh Guru is associated with the town of Manikaran?",
+    "options": ["Guru Nanak Dev Ji", "Guru Gobind Singh Ji", "Guru Arjan Dev Ji", "Guru Tegh Bahadur Ji"],
+    "correctIndex": 0,
+    "explanation": "Guru Nanak Dev Ji is believed to have visited Manikaran. A famous Gurudwara exists there.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Manikaran is famous for its natural?",
+    "options": ["Glaciers", "Hot Springs", "Waterfalls", "Caves"],
+    "correctIndex": 1,
+    "explanation": "Manikaran in Kullu is famous for its natural hot springs on the banks of Parvati river.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Bhuntar Airport serves which major tourist area of HP?",
+    "options": ["Shimla", "Dharamshala", "Kullu-Manali", "Chamba"],
+    "correctIndex": 2,
+    "explanation": "Bhuntar Airport in Kullu is the gateway for tourists visiting Kullu-Manali.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which HP district shares its border with Uttarakhand?",
+    "options": ["Kangra", "Sirmaur", "Una", "Hamirpur"],
+    "correctIndex": 1,
+    "explanation": "Sirmaur district in SE Himachal Pradesh shares a border with Uttarakhand.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The former princely state of Nahan is now part of which district?",
+    "options": ["Solan", "Sirmaur", "Shimla", "Bilaspur"],
+    "correctIndex": 1,
+    "explanation": "Nahan is the district headquarters of Sirmaur district.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "How many Rajya Sabha seats does Himachal Pradesh have?",
+    "options": ["2", "3", "4", "5"],
+    "correctIndex": 1,
+    "explanation": "Himachal Pradesh has 3 Rajya Sabha (Upper House) seats.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Solang Valley, popular for adventure sports, is near?",
+    "options": ["Shimla", "Manali", "Dharamshala", "Dalhousie"],
+    "correctIndex": 1,
+    "explanation": "Solang Valley, known for skiing and paragliding, is 14 km from Manali.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Bir-Billing in Kangra is internationally famous for?",
+    "options": ["Rock Climbing", "Paragliding", "Skiing", "River Rafting"],
+    "correctIndex": 1,
+    "explanation": "Bir-Billing in Kangra is the 'Paragliding Capital of India' and hosted the 2015 Paragliding World Cup.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "The Tandi bridge in Lahaul is at the confluence of which rivers?",
+    "options": ["Beas and Parvati", "Chandra and Bhaga", "Spiti and Pin", "Ravi and Budhil"],
+    "correctIndex": 1,
+    "explanation": "Tandi in Lahaul is where Chandra and Bhaga rivers merge to form the Chenab.",
+    "category": "Himachal GK"
+  },
+  {
+    "question": "Which district headquarters of HP is at the highest altitude?",
+    "options": ["Shimla", "Keylong", "Reckong Peo", "Kaza"],
+    "correctIndex": 1,
+    "explanation": "Keylong, the HQ of Lahaul & Spiti at 3,080 m, is the highest district HQ in HP.",
+    "category": "Himachal GK"
+  }
+]

@@ -1,6 +1,7 @@
 import PDFDocument from "pdfkit";
 import { CONSTANTS } from "../config/constants";
 import { BackendSubmission } from "./backendData.service";
+import { QuizQuestion } from "./quizData.service";
 
 export class PdfGeneratorService {
   /**
@@ -18,7 +19,6 @@ export class PdfGeneratorService {
       doc.on("end", () => resolve(Buffer.concat(buffers)));
       doc.on("error", (err) => reject(err));
 
-      // Group submissions by shift
       const groupedData: Record<string, BackendSubmission[]> = {};
       submissions.forEach((sub) => {
         const shiftKey = sub.shift || "Unspecified Shift";
@@ -26,7 +26,6 @@ export class PdfGeneratorService {
         groupedData[shiftKey].push(sub);
       });
 
-      // Sort shift keys chronologically
       const parseDate = (s: string) => {
         const match = s.match(/(\d{1,2})-(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-(\d{4})/i);
         if (!match) return 0;
@@ -43,7 +42,6 @@ export class PdfGeneratorService {
 
       const timestamp = new Date().toLocaleString();
 
-      // Top Document Header Banner
       doc
         .fillColor("#0f172a")
         .rect(0, 0, doc.page.width, 95)
@@ -83,7 +81,6 @@ export class PdfGeneratorService {
 
           const shiftSubmissions = groupedData[shift];
 
-          // Shift Section Heading
           doc
             .fillColor("#1e293b")
             .fontSize(13)
@@ -92,7 +89,6 @@ export class PdfGeneratorService {
 
           currentY += 18;
 
-          // Table Header Row
           doc
             .fillColor("#0f172a")
             .rect(40, currentY, doc.page.width - 80, 22)
@@ -110,7 +106,6 @@ export class PdfGeneratorService {
 
           currentY += 22;
 
-          // Table Data Rows
           shiftSubmissions.forEach((sub, sIdx) => {
             if (currentY > doc.page.height - 60) {
               doc.addPage();
@@ -140,7 +135,6 @@ export class PdfGeneratorService {
         });
       }
 
-      // Page Footer
       doc
         .fontSize(8)
         .fillColor("#94a3b8")
@@ -167,11 +161,9 @@ export class PdfGeneratorService {
       doc.on("end", () => resolve(Buffer.concat(buffers)));
       doc.on("error", (err) => reject(err));
 
-      // Sort raw submissions highest to lowest score
       const sortedSubs = [...submissions].sort((a, b) => (b.score || 0) - (a.score || 0));
       const timestamp = new Date().toLocaleString();
 
-      // Top Document Header Banner
       doc
         .fillColor("#1e1b4b")
         .rect(0, 0, doc.page.width, 95)
@@ -196,7 +188,6 @@ export class PdfGeneratorService {
 
       let currentY = 110;
 
-      // Table Header Row
       doc
         .fillColor("#312e81")
         .rect(40, currentY, doc.page.width - 80, 24)
@@ -247,7 +238,6 @@ export class PdfGeneratorService {
         });
       }
 
-      // Page Footer
       doc
         .fontSize(8)
         .fillColor("#94a3b8")
@@ -260,9 +250,9 @@ export class PdfGeneratorService {
   }
 
   /**
-   * Generates Daily HP GK Quiz Practice PDF
+   * Generates Daily HP GK Quiz Practice Set PDF from Quiz-Bot question bank
    */
-  public static async generateGkQuizPdf(): Promise<Buffer> {
+  public static async generateGkQuizPdf(questions: QuizQuestion[]): Promise<Buffer> {
     return new Promise((resolve, reject) => {
       const doc = new PDFDocument({ margin: 40, size: "A4" });
       const buffers: Buffer[] = [];
@@ -271,38 +261,136 @@ export class PdfGeneratorService {
       doc.on("end", () => resolve(Buffer.concat(buffers)));
       doc.on("error", (err) => reject(err));
 
+      const timestamp = new Date().toLocaleDateString();
+
+      // Top Header Banner
       doc
-        .fillColor("#2563eb")
-        .rect(0, 0, doc.page.width, 80)
+        .fillColor("#1e3a8a")
+        .rect(0, 0, doc.page.width, 95)
         .fill();
 
       doc
         .fillColor("#ffffff")
         .fontSize(20)
         .font("Helvetica-Bold")
-        .text("HP General Knowledge — Daily Practice Set", 40, 25);
+        .text("HP General Knowledge — Practice Quiz Set", 40, 25);
 
       doc
         .fontSize(10)
         .font("Helvetica")
-        .fillColor("#dbeafe")
-        .text(`Join Study Group: ${CONSTANTS.TELEGRAM_QUIZ_GROUP}`, 40, 50);
+        .fillColor("#bfdbfe")
+        .text(`Target Exams: HP TGT, JBT, Patwari, Police, Competitive Exams  |  Date: ${timestamp}`, 40, 55);
 
-      doc.moveDown(3);
       doc
-        .fillColor("#1e293b")
+        .fontSize(9)
+        .fillColor("#60a5fa")
+        .text(`Questions: ${questions.length}`, doc.page.width - 150, 55, { align: "right" });
+
+      let currentY = 110;
+
+      // Section Title
+      doc
+        .fillColor("#0f172a")
         .fontSize(12)
         .font("Helvetica-Bold")
-        .text("Sample Practice Questions", 40, 110);
+        .text("SECTION I: MULTIPLE CHOICE QUESTIONS", 40, currentY);
+
+      currentY += 20;
+
+      // Render Questions
+      questions.forEach((q, qIdx) => {
+        if (currentY > doc.page.height - 120) {
+          doc.addPage();
+          currentY = 40;
+        }
+
+        // Question Title
+        doc
+          .fillColor("#1e293b")
+          .fontSize(10)
+          .font("Helvetica-Bold")
+          .text(`Q${qIdx + 1}. ${q.question}`, 40, currentY, { width: doc.page.width - 80 });
+
+        currentY += doc.heightOfString(`Q${qIdx + 1}. ${q.question}`, { width: doc.page.width - 80 }) + 6;
+
+        // Render Options 2 per row
+        const labels = ["A", "B", "C", "D"];
+        const optA = q.options[0] ? `[  ] A) ${q.options[0]}` : "";
+        const optB = q.options[1] ? `[  ] B) ${q.options[1]}` : "";
+        const optC = q.options[2] ? `[  ] C) ${q.options[2]}` : "";
+        const optD = q.options[3] ? `[  ] D) ${q.options[3]}` : "";
+
+        doc
+          .fillColor("#334155")
+          .fontSize(9)
+          .font("Helvetica")
+          .text(optA, 55, currentY, { width: 230 })
+          .text(optB, 300, currentY, { width: 230 });
+
+        currentY += 16;
+
+        doc
+          .text(optC, 55, currentY, { width: 230 })
+          .text(optD, 300, currentY, { width: 230 });
+
+        currentY += 22; // Gap between questions
+      });
+
+      // SECTION II: ANSWER KEY & EXPLANATIONS (New Page)
+      doc.addPage();
+      currentY = 40;
 
       doc
-        .fontSize(10)
-        .font("Helvetica")
-        .fillColor("#334155")
-        .text("Q1. Which river originates from the Bara Bhangal area in Himachal Pradesh?", 40, 135)
-        .text("A) Sutlej     B) Ravi     C) Beas     D) Yamuna", 55, 150)
-        .text("Q2. Who was the first Chief Commissioner of Himachal Pradesh?", 40, 180)
-        .text("A) N.C. Mehta     B) E. P. Moon     C) Y. S. Parmar     D) Bajrang Bahadur", 55, 195);
+        .fillColor("#0f172a")
+        .rect(40, currentY, doc.page.width - 80, 26)
+        .fill();
+
+      doc
+        .fillColor("#ffffff")
+        .fontSize(11)
+        .font("Helvetica-Bold")
+        .text("SECTION II: OFFICIAL ANSWER KEY & DETAILED EXPLANATIONS", 48, currentY + 7);
+
+      currentY += 34;
+
+      const labels = ["A", "B", "C", "D"];
+      questions.forEach((q, qIdx) => {
+        if (currentY > doc.page.height - 80) {
+          doc.addPage();
+          currentY = 40;
+        }
+
+        const correctLetter = labels[q.correctIndex] || "A";
+        const correctText = q.options[q.correctIndex] || "";
+
+        doc
+          .fillColor("#1e293b")
+          .fontSize(9.5)
+          .font("Helvetica-Bold")
+          .text(`Q${qIdx + 1}. Answer: (${correctLetter}) ${correctText}`, 40, currentY);
+
+        currentY += 14;
+
+        if (q.explanation) {
+          doc
+            .fillColor("#475569")
+            .fontSize(8.5)
+            .font("Helvetica-Oblique")
+            .text(`Explanation: ${q.explanation}`, 52, currentY, { width: doc.page.width - 92 });
+
+          currentY += doc.heightOfString(`Explanation: ${q.explanation}`, { width: doc.page.width - 92 }) + 8;
+        } else {
+          currentY += 8;
+        }
+      });
+
+      // Page Footer
+      doc
+        .fontSize(8)
+        .fillColor("#94a3b8")
+        .text(`HP Rank Checker Quiz Set  •  ${CONSTANTS.WEBSITE_URL}  •  Quiz Group: ${CONSTANTS.TELEGRAM_QUIZ_GROUP}`, 40, doc.page.height - 35, {
+          align: "center",
+        });
 
       doc.end();
     });

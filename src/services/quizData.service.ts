@@ -1,0 +1,110 @@
+import axios from "axios";
+import fs from "fs";
+import path from "path";
+import { ENV } from "../config/env.config";
+import { logger } from "../utils/logger";
+
+export interface QuizQuestion {
+  question: string;
+  options: string[];
+  correctIndex: number; // 0, 1, 2, 3
+  explanation?: string;
+  category?: string;
+}
+
+export class QuizDataService {
+  private static localQuestionsCache: QuizQuestion[] = [];
+
+  /**
+   * Load quiz questions from Quiz Bot MongoDB or local JSON bank
+   */
+  public static async fetchQuizQuestions(count = 20, category?: string): Promise<QuizQuestion[]> {
+    // 1. Try fetching from Quiz Bot API or shared DB if QUIZ_MONGODB_URI is provided
+    if (ENV.QUIZ_MONGODB_URI) {
+      try {
+        const res = await axios.get(`${ENV.BACKEND_API_URL}/quiz/questions?limit=${count}`, {
+          timeout: 5000,
+        });
+        if (Array.isArray(res.data) && res.data.length > 0) {
+          return res.data;
+        }
+      } catch (err) {
+        logger.warn("Could not fetch quiz questions via API, falling back to local question bank...", err);
+      }
+    }
+
+    // 2. Load from local Quiz-Bot question JSON fallback
+    const allQuestions = this.getLocalQuestions();
+    
+    let filtered = allQuestions;
+    if (category) {
+      filtered = allQuestions.filter((q) => 
+        q.category?.toLowerCase().includes(category.toLowerCase())
+      );
+      if (filtered.length === 0) filtered = allQuestions;
+    }
+
+    // Shuffle and pick requested count
+    const shuffled = [...filtered].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+  }
+
+  /**
+   * Reads fallback questions from JSON dataset
+   */
+  private static getLocalQuestions(): QuizQuestion[] {
+    if (this.localQuestionsCache.length > 0) {
+      return this.localQuestionsCache;
+    }
+
+    const jsonPath = path.join(__dirname, "../data/hp_gk_questions.json");
+    if (fs.existsSync(jsonPath)) {
+      try {
+        const raw = fs.readFileSync(jsonPath, "utf-8");
+        this.localQuestionsCache = JSON.parse(raw);
+        return this.localQuestionsCache;
+      } catch (err) {
+        logger.error("Failed to parse local hp_gk_questions.json", err);
+      }
+    }
+
+    // Fallback default questions if file not found
+    return [
+      {
+        question: "Which is the highest mountain peak in Himachal Pradesh?",
+        options: ["Reo Purgyil", "Hanuman Tibba", "Shitidhar", "Kinner Kailash"],
+        correctIndex: 0,
+        explanation: "Reo Purgyil (6,816 m) in Kinnaur district is the highest peak in HP.",
+        category: "Himachal GK"
+      },
+      {
+        question: "On which date did Himachal Pradesh attain full statehood as the 18th state of India?",
+        options: ["15th April 1948", "25th January 1971", "1st November 1966", "26th January 1950"],
+        correctIndex: 1,
+        explanation: "HP became the 18th state on 25th January 1971. Dr. Y.S. Parmar was the first CM.",
+        category: "Himachal GK"
+      },
+      {
+        question: "Who was the first Chief Minister of Himachal Pradesh?",
+        options: ["Shanta Kumar", "Ram Lal Thakur", "Dr. Yashwant Singh Parmar", "Virbhadra Singh"],
+        correctIndex: 2,
+        explanation: "Dr. Y.S. Parmar is the founder and first CM of Himachal Pradesh.",
+        category: "Himachal GK"
+      },
+      {
+        question: "Which river in Himachal Pradesh is known as 'Vipasa' in Vedic literature?",
+        options: ["Satluj", "Beas", "Ravi", "Chenab"],
+        correctIndex: 1,
+        explanation: "The Beas river is called 'Vipasa' in Vedic texts and 'Hyphasis' in Greek literature.",
+        category: "Himachal GK"
+      },
+      {
+        question: "Which is the largest natural lake in Himachal Pradesh?",
+        options: ["Prashar Lake", "Chandratal Lake", "Renuka Lake", "Khajjiar Lake"],
+        correctIndex: 2,
+        explanation: "Renuka Lake in Sirmaur district is the largest natural lake in HP.",
+        category: "Himachal GK"
+      }
+    ];
+  }
+}

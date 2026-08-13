@@ -1,6 +1,7 @@
 import { Context, Markup } from "telegraf";
 import { BackendDataService, BackendExam } from "../../services/backendData.service";
 import { PdfGeneratorService } from "../../services/pdfGenerator.service";
+import { QuizDataService } from "../../services/quizData.service";
 import { isAdminUser, isPdfWindowOpen } from "../middlewares/auth.middleware";
 import { getUserDailyPdfCount, incrementUserDailyPdfCount } from "../middlewares/rateLimit.middleware";
 import { logger } from "../../utils/logger";
@@ -174,9 +175,6 @@ export async function handleExamSelectedAction(ctx: Context & { match?: RegExpEx
 
 /**
  * 3. Triggered when user selects a Report Format (Shift vs Raw).
- * Enforces:
- *   1. 6:00 PM to 9:00 PM IST time window for non-admins
- *   2. Max 2 PDF downloads per day for non-admins
  */
 export async function handleFormatSelectedAction(ctx: Context & { match?: RegExpExecArray }) {
   try {
@@ -267,21 +265,27 @@ export async function handleFormatSelectedAction(ctx: Context & { match?: RegExp
 }
 
 /**
- * Daily HP GK Quiz Handler
+ * 4. Daily HP GK Quiz Handler (Connected to Quiz-Bot Question Bank)
  */
 export async function handleGkQuizPdfCommand(ctx: Context) {
   try {
-    await ctx.replyWithHTML("⏳ Generating <b>HP GK Practice Quiz PDF</b>...");
+    await ctx.replyWithHTML("⏳ <i>Loading question bank &amp; generating HP GK Practice Set PDF...</i>");
 
-    const pdfBuffer = await PdfGeneratorService.generateGkQuizPdf();
+    // Fetch 20 authentic questions from Quiz-Bot question bank
+    const questions = await QuizDataService.fetchQuizQuestions(20);
+
+    const pdfBuffer = await PdfGeneratorService.generateGkQuizPdf(questions);
 
     await ctx.replyWithDocument(
       {
         source: pdfBuffer,
-        filename: "HP_GK_Practice_Quiz.pdf",
+        filename: "HP_GK_Practice_Quiz_Set.pdf",
       },
       {
-        caption: "🧠 <b>Daily HP GK Practice Set</b>\nJoin @hprankchecker for daily quizzes!",
+        caption: 
+          `🧠 <b>Daily HP GK Practice Set</b> (${questions.length} Questions)\n` +
+          `Includes Section I (Question Paper) &amp; Section II (Answer Key + Explanations)!\n\n` +
+          `Join @hprankchecker for daily quizzes!`,
         parse_mode: "HTML",
       }
     );
