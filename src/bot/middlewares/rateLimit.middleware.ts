@@ -10,7 +10,7 @@ const userDailyQuizPdfMap: Map<string, { count: number; dateStr: string }> = new
 
 const RATE_LIMIT_MS = 2500; // 2.5 seconds cooldown between standard commands
 const SPAM_WINDOW_MS = 10000; // 10 seconds window for detecting rapid spam
-const SPAM_MAX_REQUESTS = 4; // Max 4 requests per 10s allowed before triggering 30-min jail
+const SPAM_MAX_REQUESTS = 8; // Max 8 heavy requests per 10s allowed before triggering 30-min jail
 const BAN_DURATION_MS = 30 * 60 * 1000; // 30 Minutes Ban
 
 /**
@@ -109,6 +109,15 @@ export async function rateLimitMiddleware(ctx: Context, next: () => Promise<void
 
   const now = Date.now();
 
+  // Check if callback query is a navigation/browsing action (e.g. flipping pages, switching categories)
+  const cbData = ctx.callbackQuery && "data" in ctx.callbackQuery ? (ctx.callbackQuery as any).data : "";
+  const isBrowsingAction = typeof cbData === "string" && (
+    cbData.startsWith("exampage_") ||
+    cbData.startsWith("cat_") ||
+    cbData === "back_to_exams" ||
+    cbData === "noop"
+  );
+
   // 1. Check if user is currently serving a 30-minute spam ban
   const bannedUntil = userBannedUntilMap.get(userId) || 0;
   if (now < bannedUntil) {
@@ -129,30 +138,32 @@ export async function rateLimitMiddleware(ctx: Context, next: () => Promise<void
     userRequestTimestamps.delete(userId);
   }
 
-  // 2. Track rolling request timestamps in 10s window
-  const timestamps = userRequestTimestamps.get(userId) || [];
-  const recentTimestamps = timestamps.filter((ts) => now - ts < SPAM_WINDOW_MS);
-  recentTimestamps.push(now);
-  userRequestTimestamps.set(userId, recentTimestamps);
+  // 2. Track rolling request timestamps ONLY for non-browsing/heavy actions (PDF requests, commands)
+  if (!isBrowsingAction) {
+    const timestamps = userRequestTimestamps.get(userId) || [];
+    const recentTimestamps = timestamps.filter((ts) => now - ts < SPAM_WINDOW_MS);
+    recentTimestamps.push(now);
+    userRequestTimestamps.set(userId, recentTimestamps);
 
-  // 3. Trigger 30-Minute Ban if user exceeded SPAM_MAX_REQUESTS within 10s
-  if (recentTimestamps.length > SPAM_MAX_REQUESTS) {
-    const newBanExpiration = now + BAN_DURATION_MS;
-    userBannedUntilMap.set(userId, newBanExpiration);
+    // 3. Trigger 30-Minute Ban if user exceeded SPAM_MAX_REQUESTS within 10s
+    if (recentTimestamps.length > SPAM_MAX_REQUESTS) {
+      const newBanExpiration = now + BAN_DURATION_MS;
+      userBannedUntilMap.set(userId, newBanExpiration);
 
-    const banMessage = `⛔ <b>Anti-Spam Block Triggered!</b>\n\nRepeated rapid requests detected. You are temporarily blocked from using the bot for <b>30 minutes</b>.`;
+      const banMessage = `⛔ <b>Anti-Spam Block Triggered!</b>\n\nRepeated rapid requests detected. You are temporarily blocked from using the bot for <b>30 minutes</b>.`;
 
-    if (ctx.callbackQuery) {
-      try {
-        await ctx.answerCbQuery("⛔ Blocked for 30 minutes due to rapid spamming!", { show_alert: true });
-      } catch (e) {}
-    } else {
-      await ctx.replyWithHTML(banMessage);
+      if (ctx.callbackQuery) {
+        try {
+          await ctx.answerCbQuery("⛔ Blocked for 30 minutes due to rapid spamming!", { show_alert: true });
+        } catch (e) {}
+      } else {
+        await ctx.replyWithHTML(banMessage);
+      }
+      return;
     }
-    return;
   }
 
-  // 4. Standard 2.5s Cooldown Check
+  // 4. Standard Cooldown Check (2.5s)
   const lastTime = userLastCommandTime.get(userId) || 0;
   if (now - lastTime < RATE_LIMIT_MS) {
     if (ctx.callbackQuery) {
