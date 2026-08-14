@@ -8,7 +8,7 @@ export interface BackendSubmission {
   score: number;
   category: string;
   shift: string;
-  examId?: { name: string; stream: string };
+  examId?: { _id: string; name: string; stream: string };
   createdAt: string;
 }
 
@@ -88,104 +88,103 @@ export class BackendDataService {
   }
 
   /**
-   * Fetch submissions by stream or examId for PDF report generation.
-   * Multi-strategy lookup ensures candidate submissions from both General & Legacy collections are found!
+   * Fetch submissions strictly for the selected target exam (_id or stream).
+   * Ensures zero cross-exam leakage by strict equality checks!
    */
   public static async fetchSubmissionsByStream(streamOrExamId: string): Promise<BackendSubmission[]> {
     const isObjectId = /^[0-9a-fA-F]{24}$/.test(streamOrExamId);
-    const allSubmissions: BackendSubmission[] = [];
+    const candidateSubmissions: BackendSubmission[] = [];
 
-    // Resolve exam object details (_id, stream, name)
+    // Resolve exact exam object details (_id, stream, name)
     const allExams = await this.fetchAllExams();
     const matchedExam = allExams.find(
       (e) => e._id === streamOrExamId || e.stream === streamOrExamId || e.name === streamOrExamId
     );
 
-    const examId = matchedExam?._id || (isObjectId ? streamOrExamId : undefined);
-    const stream = matchedExam?.stream || streamOrExamId;
-    const examName = matchedExam?.name || streamOrExamId;
+    const targetExamId = matchedExam?._id || (isObjectId ? streamOrExamId : undefined);
+    const targetStream = matchedExam?.stream || streamOrExamId;
+    const targetExamName = matchedExam?.name || streamOrExamId;
 
-    // 1. Query General Submissions by examId
-    if (examId) {
+    // 1. Strict Query General Submissions by examId
+    if (targetExamId) {
       try {
-        const genEndpoint = `${ENV.BACKEND_API_URL}/admin/general/submissions?examId=${examId}&export=true`;
+        const genEndpoint = `${ENV.BACKEND_API_URL}/admin/general/submissions?examId=${targetExamId}&export=true`;
         const genRes = await axios.get(genEndpoint, {
           headers: { "x-admin-password": ENV.ADMIN_PASSWORD },
           timeout: 8000,
         });
 
         if (genRes.data?.submissions && Array.isArray(genRes.data.submissions) && genRes.data.submissions.length > 0) {
-          allSubmissions.push(...genRes.data.submissions);
+          // Strict filter: must match targetExamId
+          const strictGen = genRes.data.submissions.filter((sub: any) => {
+            const subExamId = sub.examId?._id || sub.examId;
+            return String(subExamId) === String(targetExamId);
+          });
+          candidateSubmissions.push(...strictGen);
         }
       } catch (err) {
-        logger.warn(`General submissions lookup by examId ${examId} failed`, err);
+        logger.warn(`General submissions lookup by examId ${targetExamId} failed`, err);
       }
     }
 
-    // 2. Query All General Submissions (export=true) and filter by examId, stream, or name
-    try {
-      const allGenEndpoint = `${ENV.BACKEND_API_URL}/admin/general/submissions?export=true`;
-      const allGenRes = await axios.get(allGenEndpoint, {
-        headers: { "x-admin-password": ENV.ADMIN_PASSWORD },
-        timeout: 8000,
-      });
-
-      if (allGenRes.data?.submissions && Array.isArray(allGenRes.data.submissions)) {
-        const filteredGen = allGenRes.data.submissions.filter((sub: any) => {
-          const subExamId = sub.examId?._id || sub.examId;
-          const subStream = sub.examId?.stream || sub.stream;
-          const subName = sub.examId?.name || sub.name;
-
-          return (
-            (examId && String(subExamId) === String(examId)) ||
-            (stream && String(subStream).toUpperCase() === String(stream).toUpperCase()) ||
-            (examName && String(subName).toLowerCase().includes(String(examName).toLowerCase()))
-          );
-        });
-
-        allSubmissions.push(...filteredGen);
-      }
-    } catch (err) {
-      logger.warn(`Export query for all general submissions failed`, err);
-    }
-
-    // 3. Query /admin/analytics/marks?stream=...
-    if (stream) {
+    // 2. Fallback: Query all general submissions and filter strictly by exact examId or exact examName
+    if (candidateSubmissions.length === 0) {
       try {
-        const analyticsEndpoint = `${ENV.BACKEND_API_URL}/admin/analytics/marks?stream=${encodeURIComponent(stream)}&sort=desc`;
-        const res = await axios.get(analyticsEndpoint, {
+        const allGenEndpoint = `${ENV.BACKEND_API_URL}/admin/general/submissions?export=true`;
+        const allGenRes = await axios.get(allGenEndpoint, {
           headers: { "x-admin-password": ENV.ADMIN_PASSWORD },
           timeout: 8000,
         });
 
-        if (res.data?.data && Array.isArray(res.data.data) && res.data.data.length > 0) {
-          allSubmissions.push(...res.data.data);
+        if (allGenRes.data?.submissions && Array.isArray(allGenRes.data.submissions)) {
+          const filteredGen = allGenRes.data.submissions.filter((sub: any) => {
+            const subExamId = sub.examId?._id || sub.examId;
+            const subName = sub.examId?.name || sub.name || "";
+
+            // Strict exact match (no loose substring inclusion!)
+            const matchesId = targetExamId && String(subExamId) === String(targetExamId);
+            const matchesExactName = targetExamName && subName.trim().toLowerCase() === targetExamName.trim().toLowerCase();
+
+            return Boolean(matchesId || matchesExactName);
+          });
+
+          candidateSubmissions.push(...filteredGen);
         }
       } catch (err) {
-        logger.warn(`Analytics marks lookup failed for ${stream}`, err);
+        logger.warn(`Export query for all general submissions failed`, err);
       }
     }
 
-    // 4. Query /admin/submissions?stream=...
-    if (stream) {
+    // 3. Query Legacy Submissions endpoint if no general submissions found
+    if (candidateSubmissions.length === 0 && targetStream) {
       try {
-        const endpoint = `${ENV.BACKEND_API_URL}/admin/submissions?stream=${encodeURIComponent(stream)}&limit=500`;
+        const endpoint = `${ENV.BACKEND_API_URL}/admin/submissions?stream=${encodeURIComponent(targetStream)}&limit=1000`;
         const response = await axios.get(endpoint, {
           headers: { "x-admin-password": ENV.ADMIN_PASSWORD },
           timeout: 8000,
         });
 
         if (response.data?.submissions && Array.isArray(response.data.submissions)) {
-          allSubmissions.push(...response.data.submissions);
+          const filteredLegacy = response.data.submissions.filter((sub: any) => {
+            const subExamId = sub.examId?._id || sub.examId;
+            const subStream = sub.examId?.stream || sub.stream || "";
+
+            const matchesId = targetExamId && String(subExamId) === String(targetExamId);
+            const matchesStream = targetStream && subStream.toUpperCase() === targetStream.toUpperCase();
+
+            return Boolean(matchesId || matchesStream);
+          });
+
+          candidateSubmissions.push(...filteredLegacy);
         }
       } catch (err) {
-        logger.warn(`Submissions lookup failed for ${stream}`, err);
+        logger.warn(`Submissions lookup failed for stream ${targetStream}`, err);
       }
     }
 
-    // Deduplicate candidate submissions
+    // Deduplicate candidate submissions strictly by submission ID
     const uniqueMap = new Map<string, BackendSubmission>();
-    allSubmissions.forEach((sub) => {
+    candidateSubmissions.forEach((sub) => {
       const key = sub._id || `${sub.rollNumber}_${sub.score}_${sub.shift}`;
       if (!uniqueMap.has(key)) {
         uniqueMap.set(key, sub);
