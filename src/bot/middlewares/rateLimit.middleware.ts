@@ -10,7 +10,7 @@ const userDailyQuizPdfMap: Map<string, { count: number; dateStr: string }> = new
 
 const RATE_LIMIT_MS = 2500; // 2.5 seconds cooldown between standard commands
 const SPAM_WINDOW_MS = 10000; // 10 seconds window for detecting rapid spam
-const SPAM_MAX_REQUESTS = 8; // Max 8 heavy requests per 10s allowed before triggering 30-min jail
+const SPAM_MAX_REQUESTS = 4; // Max 4 heavy requests per 10s allowed before triggering 30-min jail
 const BAN_DURATION_MS = 30 * 60 * 1000; // 30 Minutes Ban
 
 /**
