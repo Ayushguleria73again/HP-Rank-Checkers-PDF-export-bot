@@ -291,12 +291,8 @@ export async function handleFormatSelectedAction(ctx: Context & { match?: RegExp
         `Candidate PDF report generation is available daily strictly between <b>6:00 PM and 9:00 PM IST</b>.\n\n` +
         `💡 <i>Please try again during the window!</i>`;
 
-      const closedKeyboard = Markup.inlineKeyboard([
-        [Markup.button.callback("« Back to Exams Directory", "back_to_exams")]
-      ]);
-
       try {
-        await ctx.editMessageText(closedText, { parse_mode: "HTML", ...closedKeyboard });
+        await ctx.editMessageText(closedText, { parse_mode: "HTML" });
       } catch (e) {}
       return;
     }
@@ -310,12 +306,8 @@ export async function handleFormatSelectedAction(ctx: Context & { match?: RegExp
           `You have already generated <b>${currentDailyCount}/${MAX_DAILY_EXAM_PDF_LIMIT} Exam PDF reports</b> today.\n\n` +
           `Your daily download quota will automatically reset tomorrow at <b>00:00 IST</b>.`;
 
-        const limitKeyboard = Markup.inlineKeyboard([
-          [Markup.button.callback("« Back to Exams Directory", "back_to_exams")]
-        ]);
-
         try {
-          await ctx.editMessageText(limitText, { parse_mode: "HTML", ...limitKeyboard });
+          await ctx.editMessageText(limitText, { parse_mode: "HTML" });
         } catch (e) {}
         return;
       }
