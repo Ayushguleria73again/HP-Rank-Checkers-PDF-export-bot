@@ -1,10 +1,17 @@
 import { Context } from "telegraf";
+import { isAdminUser } from "./auth.middleware";
 
 const userLastCommandTime: Map<number, number> = new Map();
+const userRequestTimestamps: Map<number, number[]> = new Map();
+const userBannedUntilMap: Map<number, number> = new Map();
+
 const userDailyExamPdfMap: Map<string, { count: number; dateStr: string }> = new Map();
 const userDailyQuizPdfMap: Map<string, { count: number; dateStr: string }> = new Map();
 
-const RATE_LIMIT_MS = 2500; // 2.5 seconds cooldown between commands
+const RATE_LIMIT_MS = 2500; // 2.5 seconds cooldown between standard commands
+const SPAM_WINDOW_MS = 10000; // 10 seconds window for detecting rapid spam
+const SPAM_MAX_REQUESTS = 4; // Max 4 requests per 10s allowed before triggering 30-min jail
+const BAN_DURATION_MS = 30 * 60 * 1000; // 30 Minutes Ban
 
 /**
  * Returns today's date string in IST format (YYYY-MM-DD)
@@ -89,15 +96,64 @@ export function incrementUserDailyQuizPdfCount(userId: string | number): number 
 }
 
 /**
- * Anti-spam rate limit middleware (clean toast answer for callbacks to prevent group chat clutter)
+ * Anti-spam rate limit & 30-minute spam jail middleware
  */
 export async function rateLimitMiddleware(ctx: Context, next: () => Promise<void>) {
   const userId = ctx.from?.id;
   if (!userId) return next();
 
-  const now = Date.now();
-  const lastTime = userLastCommandTime.get(userId) || 0;
+  // Admin exemption
+  if (isAdminUser(userId)) {
+    return next();
+  }
 
+  const now = Date.now();
+
+  // 1. Check if user is currently serving a 30-minute spam ban
+  const bannedUntil = userBannedUntilMap.get(userId) || 0;
+  if (now < bannedUntil) {
+    const remainingMins = Math.ceil((bannedUntil - now) / 60000);
+    const banNotice = `⛔ <b>Anti-Spam Alert!</b>\n\nYour account has been temporarily blocked for <b>30 minutes</b> due to rapid spamming.\n\n<i>Please try again in ${remainingMins} minute(s).</i>`;
+
+    if (ctx.callbackQuery) {
+      try {
+        await ctx.answerCbQuery(`⛔ Blocked for spamming! Try again in ${remainingMins}m.`, { show_alert: true });
+      } catch (e) {}
+    } else {
+      await ctx.replyWithHTML(banNotice);
+    }
+    return;
+  } else if (bannedUntil > 0 && now >= bannedUntil) {
+    // Ban expired
+    userBannedUntilMap.delete(userId);
+    userRequestTimestamps.delete(userId);
+  }
+
+  // 2. Track rolling request timestamps in 10s window
+  const timestamps = userRequestTimestamps.get(userId) || [];
+  const recentTimestamps = timestamps.filter((ts) => now - ts < SPAM_WINDOW_MS);
+  recentTimestamps.push(now);
+  userRequestTimestamps.set(userId, recentTimestamps);
+
+  // 3. Trigger 30-Minute Ban if user exceeded SPAM_MAX_REQUESTS within 10s
+  if (recentTimestamps.length > SPAM_MAX_REQUESTS) {
+    const newBanExpiration = now + BAN_DURATION_MS;
+    userBannedUntilMap.set(userId, newBanExpiration);
+
+    const banMessage = `⛔ <b>Anti-Spam Block Triggered!</b>\n\nRepeated rapid requests detected. You are temporarily blocked from using the bot for <b>30 minutes</b>.`;
+
+    if (ctx.callbackQuery) {
+      try {
+        await ctx.answerCbQuery("⛔ Blocked for 30 minutes due to rapid spamming!", { show_alert: true });
+      } catch (e) {}
+    } else {
+      await ctx.replyWithHTML(banMessage);
+    }
+    return;
+  }
+
+  // 4. Standard 2.5s Cooldown Check
+  const lastTime = userLastCommandTime.get(userId) || 0;
   if (now - lastTime < RATE_LIMIT_MS) {
     if (ctx.callbackQuery) {
       try {
