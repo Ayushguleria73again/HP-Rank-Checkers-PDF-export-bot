@@ -8,10 +8,45 @@ const userBannedUntilMap: Map<number, number> = new Map();
 const userDailyExamPdfMap: Map<string, { count: number; dateStr: string }> = new Map();
 const userDailyQuizPdfMap: Map<string, { count: number; dateStr: string }> = new Map();
 
-const RATE_LIMIT_MS = 2500; // 2.5 seconds cooldown between standard commands
+const RATE_LIMIT_MS = 2500; // 2.5 seconds cooldown between heavy commands (PDF generation, stats, search)
+const BROWSING_DEBOUNCE_MS = 350; // 350ms debounce for quick inline menu pagination & category switching
 const SPAM_WINDOW_MS = 10000; // 10 seconds window for detecting rapid spam
 const SPAM_MAX_REQUESTS = 4; // Max 4 heavy requests per 10s allowed before triggering 30-min jail
 const BAN_DURATION_MS = 30 * 60 * 1000; // 30 Minutes Ban
+
+// Periodic Memory Cleanup: Evict stale records every 2 hours to prevent memory leaks
+setInterval(() => {
+  const now = Date.now();
+  const today = getTodayIstDateStr();
+
+  // 1. Evict expired bans
+  for (const [userId, banExpiry] of userBannedUntilMap.entries()) {
+    if (now >= banExpiry) {
+      userBannedUntilMap.delete(userId);
+      userRequestTimestamps.delete(userId);
+    }
+  }
+
+  // 2. Evict expired daily counts from previous days
+  for (const [userId, record] of userDailyExamPdfMap.entries()) {
+    if (record.dateStr !== today) {
+      userDailyExamPdfMap.delete(userId);
+    }
+  }
+  for (const [userId, record] of userDailyQuizPdfMap.entries()) {
+    if (record.dateStr !== today) {
+      userDailyQuizPdfMap.delete(userId);
+    }
+  }
+
+  // 3. Evict command timestamps inactive for > 1 hour
+  for (const [userId, lastTime] of userLastCommandTime.entries()) {
+    if (now - lastTime > 3600000) {
+      userLastCommandTime.delete(userId);
+      userRequestTimestamps.delete(userId);
+    }
+  }
+}, 2 * 60 * 60 * 1000);
 
 /**
  * Returns today's date string in IST format (YYYY-MM-DD)
@@ -163,12 +198,14 @@ export async function rateLimitMiddleware(ctx: Context, next: () => Promise<void
     }
   }
 
-  // 4. Standard Cooldown Check (2.5s)
+  // 4. Cooldown Check: Adaptive cooldown for browsing (350ms) vs heavy commands (2.5s)
   const lastTime = userLastCommandTime.get(userId) || 0;
-  if (now - lastTime < RATE_LIMIT_MS) {
+  const applicableLimit = isBrowsingAction ? BROWSING_DEBOUNCE_MS : RATE_LIMIT_MS;
+
+  if (now - lastTime < applicableLimit) {
     if (ctx.callbackQuery) {
       try {
-        await ctx.answerCbQuery("⚠️ Please wait a few seconds before tapping again.");
+        await ctx.answerCbQuery(isBrowsingAction ? "⏳ Loading..." : "⚠️ Please wait a moment before requesting again.");
       } catch (e) {}
     } else {
       await ctx.reply("⚠️ Please wait a few seconds before requesting another action.");

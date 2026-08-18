@@ -7,7 +7,7 @@ import { logger } from "../../utils/logger";
  */
 export function isAdminUser(userId?: number | string): boolean {
   if (!userId) return false;
-  return ENV.ADMIN_TELEGRAM_IDS.includes(String(userId));
+  return ENV.ADMIN_TELEGRAM_IDS.includes(String(userId).trim());
 }
 
 /**
@@ -17,11 +17,11 @@ export function isAdminUser(userId?: number | string): boolean {
 export function isPdfWindowOpen(): boolean {
   try {
     const now = new Date();
-    // Convert to Indian Standard Time (IST) hour (0-23 format)
+    // Convert to Indian Standard Time (IST) hour (0-23 format with h23 hourCycle)
     const formatter = new Intl.DateTimeFormat("en-US", {
       timeZone: "Asia/Kolkata",
-      hour: "numeric",
-      hour12: false,
+      hour: "2-digit",
+      hourCycle: "h23",
     });
     const hour = parseInt(formatter.format(now), 10);
 

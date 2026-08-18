@@ -144,22 +144,22 @@ export class PdfGeneratorService {
               .fillColor("#334155")
               .fontSize(8.5)
               .font("Helvetica")
-              .text(String(sIdx + 1), 48, currentY + 5, { width: 25 })
-              .text(rollShort, 75, currentY + 5, { width: 110, height: 15 })
-              .text(categoryClean, 190, currentY + 5, { width: 120, height: 15 });
+              .text(String(sIdx + 1), 48, currentY + 5, { width: 25, lineBreak: false })
+              .text(rollShort, 75, currentY + 5, { width: 110, height: 15, lineBreak: false, ellipsis: true })
+              .text(categoryClean, 190, currentY + 5, { width: 120, height: 15, lineBreak: false, ellipsis: true });
 
             // Render Score with Highlighting Font
             doc
               .fillColor("#0f172a")
               .fontSize(9)
               .font("Helvetica-Bold")
-              .text(scoreFormatted, 320, currentY + 5, { width: 65, height: 15 });
+              .text(scoreFormatted, 320, currentY + 5, { width: 65, height: 15, lineBreak: false });
 
             doc
               .fillColor("#334155")
               .fontSize(8.5)
               .font("Helvetica")
-              .text(sub.shift || "N/A", 390, currentY + 5, { width: 160, height: 15 });
+              .text(sub.shift || "N/A", 390, currentY + 5, { width: 160, height: 15, lineBreak: false, ellipsis: true });
 
             currentY += 20;
           });
@@ -263,21 +263,21 @@ export class PdfGeneratorService {
             .fillColor("#1e1b4b")
             .fontSize(8.5)
             .font("Helvetica")
-            .text(String(idx + 1), 48, currentY + 5, { width: 35 })
-            .text(rollShort, 85, currentY + 5, { width: 120, height: 15 })
-            .text(categoryClean, 210, currentY + 5, { width: 110, height: 15 });
+            .text(String(idx + 1), 48, currentY + 5, { width: 35, lineBreak: false })
+            .text(rollShort, 85, currentY + 5, { width: 120, height: 15, lineBreak: false, ellipsis: true })
+            .text(categoryClean, 210, currentY + 5, { width: 110, height: 15, lineBreak: false, ellipsis: true });
 
           doc
             .fillColor("#1e1b4b")
             .fontSize(9)
             .font("Helvetica-Bold")
-            .text(scoreFormatted, 330, currentY + 5, { width: 65, height: 15 });
+            .text(scoreFormatted, 330, currentY + 5, { width: 65, height: 15, lineBreak: false });
 
           doc
             .fillColor("#1e1b4b")
             .fontSize(8.5)
             .font("Helvetica")
-            .text(sub.shift || "N/A", 400, currentY + 5, { width: 150, height: 15 });
+            .text(sub.shift || "N/A", 400, currentY + 5, { width: 150, height: 15, lineBreak: false, ellipsis: true });
 
           currentY += 20;
         });

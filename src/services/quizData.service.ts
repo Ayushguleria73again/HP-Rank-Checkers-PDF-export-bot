@@ -44,9 +44,16 @@ export class QuizDataService {
       if (filtered.length === 0) filtered = allQuestions;
     }
 
-    // Shuffle and pick requested count
-    const shuffled = [...filtered].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, Math.min(count, shuffled.length));
+    // Unbiased Fisher-Yates (Knuth) Shuffle
+    const pool = [...filtered];
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = pool[i];
+      pool[i] = pool[j];
+      pool[j] = temp;
+    }
+
+    return pool.slice(0, Math.min(count, pool.length));
   }
 
   /**
@@ -98,23 +105,9 @@ export class QuizDataService {
       },
       {
         question: "Who was the first Chief Minister of Himachal Pradesh?",
-        options: ["Shanta Kumar", "Ram Lal Thakur", "Dr. Yashwant Singh Parmar", "Virbhadra Singh"],
-        correctIndex: 2,
-        explanation: "Dr. Y.S. Parmar is the founder and first CM of Himachal Pradesh.",
-        category: "Himachal GK"
-      },
-      {
-        question: "Which river in Himachal Pradesh is known as 'Vipasa' in Vedic literature?",
-        options: ["Satluj", "Beas", "Ravi", "Chenab"],
-        correctIndex: 1,
-        explanation: "The Beas river is called 'Vipasa' in Vedic texts and 'Hyphasis' in Greek literature.",
-        category: "Himachal GK"
-      },
-      {
-        question: "Which is the largest natural lake in Himachal Pradesh?",
-        options: ["Prashar Lake", "Chandratal Lake", "Renuka Lake", "Khajjiar Lake"],
-        correctIndex: 2,
-        explanation: "Renuka Lake in Sirmaur district is the largest natural lake in HP.",
+        options: ["Dr. Yashwant Singh Parmar", "Thakur Ram Lal", "Sh. Virbhadra Singh", "Sh. Shanta Kumar"],
+        correctIndex: 0,
+        explanation: "Dr. Yashwant Singh Parmar became the first Chief Minister of Himachal Pradesh on 24 March 1952.",
         category: "Himachal GK"
       }
     ];

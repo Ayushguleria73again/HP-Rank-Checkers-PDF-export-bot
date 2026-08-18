@@ -60,12 +60,13 @@ function buildExamsKeyboard(exams: BackendExam[], page = 1, category = "ALL") {
 
   // 1 full-width exam button per row
   pageExams.forEach((exam, idx) => {
-    const code = exam._id || exam.stream;
+    const rawCode = exam._id || exam.stream;
+    const safeCode = rawCode.length > 36 ? rawCode.slice(0, 36) : rawCode;
     const cleanName = cleanExamName(exam.name, exam.stream);
     const itemNum = startIndex + idx + 1;
     
     keyboardRows.push([
-      Markup.button.callback(`${itemNum}. 📌 ${cleanName}`, `exam_${code}`)
+      Markup.button.callback(`${itemNum}. 📌 ${cleanName}`, `exam_${safeCode}`)
     ]);
   });
 

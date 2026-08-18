@@ -89,7 +89,7 @@ export class BackendDataService {
 
   /**
    * Fetch submissions strictly for the selected target exam (_id or stream).
-   * Ensures zero cross-exam leakage by strict equality checks!
+   * Supports GeneralSubmission, JBTSubmission, and Legacy Submission collections.
    */
   public static async fetchSubmissionsByStream(streamOrExamId: string): Promise<BackendSubmission[]> {
     const isObjectId = /^[0-9a-fA-F]{24}$/.test(streamOrExamId);
@@ -98,15 +98,33 @@ export class BackendDataService {
     // Resolve exact exam object details (_id, stream, name)
     const allExams = await this.fetchAllExams();
     const matchedExam = allExams.find(
-      (e) => e._id === streamOrExamId || e.stream === streamOrExamId || e.name === streamOrExamId
+      (e) => e._id === streamOrExamId || e.stream === streamOrExamId || e.name.toLowerCase() === streamOrExamId.toLowerCase()
     );
 
     const targetExamId = matchedExam?._id || (isObjectId ? streamOrExamId : undefined);
     const targetStream = matchedExam?.stream || streamOrExamId;
     const targetExamName = matchedExam?.name || streamOrExamId;
 
-    // 1. Strict Query General Submissions by examId
-    if (targetExamId) {
+    // 1. Check JBT collection first if target is JBT
+    const isJBTTarget = targetStream?.toUpperCase() === "JBT" || targetExamName?.toUpperCase().includes("JBT");
+    if (isJBTTarget) {
+      try {
+        const jbtEndpoint = `${ENV.BACKEND_API_URL}/jbt/admin/export`;
+        const jbtRes = await axios.get(jbtEndpoint, {
+          headers: { "x-admin-password": ENV.ADMIN_PASSWORD },
+          timeout: 8000,
+        });
+
+        if (Array.isArray(jbtRes.data) && jbtRes.data.length > 0) {
+          candidateSubmissions.push(...jbtRes.data);
+        }
+      } catch (err) {
+        logger.warn(`JBT submissions export lookup failed:`, err);
+      }
+    }
+
+    // 2. Strict Query General Submissions by examId
+    if (candidateSubmissions.length === 0 && targetExamId && isObjectId) {
       try {
         const genEndpoint = `${ENV.BACKEND_API_URL}/admin/general/submissions?examId=${targetExamId}&export=true`;
         const genRes = await axios.get(genEndpoint, {
@@ -115,7 +133,6 @@ export class BackendDataService {
         });
 
         if (genRes.data?.submissions && Array.isArray(genRes.data.submissions) && genRes.data.submissions.length > 0) {
-          // Strict filter: must match targetExamId
           const strictGen = genRes.data.submissions.filter((sub: any) => {
             const subExamId = sub.examId?._id || sub.examId;
             return String(subExamId) === String(targetExamId);
@@ -127,7 +144,7 @@ export class BackendDataService {
       }
     }
 
-    // 2. Fallback: Query all general submissions and filter strictly by exact examId or exact examName
+    // 3. Fallback: Query all general submissions and filter by exact examId or exact examName
     if (candidateSubmissions.length === 0) {
       try {
         const allGenEndpoint = `${ENV.BACKEND_API_URL}/admin/general/submissions?export=true`;
@@ -141,7 +158,6 @@ export class BackendDataService {
             const subExamId = sub.examId?._id || sub.examId;
             const subName = sub.examId?.name || sub.name || "";
 
-            // Strict exact match (no loose substring inclusion!)
             const matchesId = targetExamId && String(subExamId) === String(targetExamId);
             const matchesExactName = targetExamName && subName.trim().toLowerCase() === targetExamName.trim().toLowerCase();
 
@@ -155,7 +171,7 @@ export class BackendDataService {
       }
     }
 
-    // 3. Query Legacy Submissions endpoint if no general submissions found
+    // 4. Query Legacy Submissions endpoint if no general submissions found
     if (candidateSubmissions.length === 0 && targetStream) {
       try {
         const endpoint = `${ENV.BACKEND_API_URL}/admin/submissions?stream=${encodeURIComponent(targetStream)}&limit=1000`;

@@ -7,18 +7,31 @@ import { logger } from "../../utils/logger";
 export async function handlePostChannelCommand(ctx: Context) {
   try {
     const text = (ctx.message && "text" in ctx.message) ? ctx.message.text : "";
-    const parts = text.split(" ");
-    const stream = parts[1] ? parts[1].toUpperCase() : "NON_MEDICAL";
+    // Parse entire multi-word stream/exam name after /post_channel
+    const query = text.replace(/^\/post_channel\s*/i, "").trim();
+    const stream = query || "NON_MEDICAL";
 
     try { await ctx.sendChatAction("typing"); } catch (e) {}
-    const broadcastLoadingMsg = await ctx.replyWithHTML(`⏳ <i>Fetching live records &amp; compiling PDF report for channel broadcast...</i>`);
+    const broadcastLoadingMsg = await ctx.replyWithHTML(`⏳ <i>Fetching live records &amp; compiling PDF report for channel broadcast (Target: <code>${stream}</code>)...</i>`);
 
     // Fetch real backend data
     const submissions = await BackendDataService.fetchSubmissionsByStream(stream);
 
+    if (submissions.length === 0) {
+      await ctx.telegram.editMessageText(
+        broadcastLoadingMsg.chat.id,
+        broadcastLoadingMsg.message_id,
+        undefined,
+        `⚠️ No candidate submissions found for <code>${stream}</code>. Broadcast aborted.`,
+        { parse_mode: "HTML" }
+      );
+      return;
+    }
+
     // Generate PDF matching Admin Panel layout
     const pdfBuffer = await PdfGeneratorService.generateShiftReportPdf(stream, submissions);
-    const filename = `HP_RankCheck_${stream}_Shift_Report.pdf`;
+    const sanitizedFilename = stream.replace(/[^a-zA-Z0-9_-]/g, "_");
+    const filename = `HP_RankCheck_${sanitizedFilename}_Shift_Report.pdf`;
     
     const caption = 
       `📊 <b>HP Rank Checker — Official Shift Report</b>\n\n` +
@@ -47,7 +60,7 @@ export async function handlePostChannelCommand(ctx: Context) {
         broadcastLoadingMsg.chat.id,
         broadcastLoadingMsg.message_id,
         undefined,
-        "❌ Failed to post PDF to Telegram Channel. Please check channel credentials.",
+        "❌ Failed to post PDF to Telegram Channel. Please check channel credentials in .env.",
         { parse_mode: "HTML" }
       );
     }
